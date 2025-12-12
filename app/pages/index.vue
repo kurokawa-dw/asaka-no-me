@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { DayWithEvents } from "~/composables/useEventCalendar";
 
+const route = useRoute();
+const router = useRouter();
+
 const { data: rawDocs } = await useAsyncData("events", () =>
   queryCollection("events").all()
 );
@@ -10,9 +13,18 @@ const { listByDate, todayEvents, allTags } = useEventCalendar(rawDocs);
 
 // ===== 月選択（Swiper カレンダーと連動） =====
 const today = new Date();
-const currentYearMonth = `${today.getFullYear()}-${String(
-  today.getMonth() + 1
-).padStart(2, "0")}`; // 'YYYY-MM'
+const currentYearMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`; // 'YYYY-MM'
+
+const initialMonth =
+  typeof route.query.month === "string" &&
+  /^\d{4}-\d{2}$/.test(route.query.month)
+    ? route.query.month
+    : currentYearMonth;
+
+const initialTag =
+  typeof route.query.tag === "string" && route.query.tag.length > 0
+    ? route.query.tag
+    : null;
 
 const selectedMonth = ref<string>(currentYearMonth);
 
@@ -89,6 +101,55 @@ const scrollToDate = (dateStr: string) => {
   });
 };
 
+const isQuerySyncReady = ref(false);
+
+onMounted(() => {
+  // ✅ hydration後にクエリを反映
+  const qMonth =
+    typeof route.query.month === "string" ? route.query.month : null;
+  const qTag = typeof route.query.tag === "string" ? route.query.tag : null;
+
+  if (qMonth && /^\d{4}-\d{2}$/.test(qMonth)) selectedMonth.value = qMonth;
+  if (qTag) selectedTag.value = qTag;
+
+  // ✅ 反映が終わってからwatchを有効化
+  isQuerySyncReady.value = true;
+});
+
+// ✅ state → URL 同期（ただし hydration直後は走らせない）
+watch(
+  selectedMonth,
+  (val) => {
+    if (!isQuerySyncReady.value) return;
+    if (route.query.month === val) return;
+    router.replace({ query: { ...route.query, month: val } });
+  },
+  { flush: "post" }
+);
+
+watch(
+  selectedTag,
+  (val) => {
+    if (!isQuerySyncReady.value) return;
+
+    const query: Record<string, any> = {
+      ...route.query,
+      month: selectedMonth.value,
+    };
+    if (val) query.tag = val;
+    else delete query.tag;
+
+    // 変化がないなら何もしない（無限replace防止）
+    const curTag =
+      typeof route.query.tag === "string" ? route.query.tag : undefined;
+    const nextTag = val ?? undefined;
+    if (curTag === nextTag) return;
+
+    router.replace({ query });
+  },
+  { flush: "post" }
+);
+
 // ===== 開発中のデバッグログ =====
 // if (process.dev) {
 //   watchEffect(() => {
@@ -122,6 +183,7 @@ const scrollToDate = (dateStr: string) => {
       <CalendarMonthSwiper
         :listByDate="listByDate"
         :selectedTag="selectedTag"
+        :currentMonth="selectedMonth"
         @month-change="selectedMonth = $event"
         @date-click="scrollToDate"
       />

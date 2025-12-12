@@ -8,6 +8,7 @@ import type { DayWithEvents } from "~/composables/useEventCalendar";
 const props = defineProps<{
   listByDate: DayWithEvents[];
   selectedTag: string | null;
+  currentMonth: string; // 'YYYY-MM'
 }>();
 
 const emit = defineEmits<{
@@ -75,8 +76,9 @@ const monthsWindow = computed(() => {
 
 // 初期スライドは「今月」が入っている index（基本的に真ん中）
 const initialIndex = computed(() => {
-  const thisKey = fmtYearMonth(today);
-  const idx = monthsWindow.value.findIndex((m) => m.key === thisKey);
+  const fallbackKey = fmtYearMonth(today);
+  const key = props.currentMonth || fallbackKey;
+  const idx = monthsWindow.value.findIndex((m) => m.key === key);
   return idx === -1 ? 0 : idx;
 });
 
