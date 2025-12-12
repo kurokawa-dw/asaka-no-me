@@ -1,113 +1,12 @@
 <script setup lang="ts">
+import type { DayWithEvents } from "~/composables/useEventCalendar";
+
 const { data: rawDocs } = await useAsyncData("events", () =>
   queryCollection("events").all()
 );
 
-// 型定義（ページ内だけで使う簡易版）
-type EventItem = {
-  slug: string;
-  title: string;
-  startDate: string;
-  endDate: string;
-  tags: string[];
-};
-
-type DayWithEvents = {
-  date: string; // 'YYYY-MM-DD'
-  events: EventItem[];
-};
-
-// ===== イベント配列（MD → frontmatter 整形） =====
-const events = computed<EventItem[]>(() => {
-  const docs = rawDocs.value ?? [];
-
-  const mapped = docs
-    .map((doc: any) => {
-      const meta = doc.meta ?? {};
-
-      return {
-        slug: String(meta.slug ?? doc.slug ?? doc.id),
-        title: String(doc.title),
-        startDate: String(meta.startDate ?? ""),
-        endDate: String(meta.endDate ?? ""),
-        tags: Array.isArray(meta.tags)
-          ? meta.tags.map((t: any) => String(t))
-          : [],
-      };
-    })
-    // start / end が両方入っているものだけ残す
-    .filter((e) => e.startDate && e.endDate);
-
-  if (process.dev) {
-    console.log("[index] events(mapped)", mapped);
-  }
-
-  return mapped;
-});
-
-// ===== 日付ごとの展開 listByDate =====
-// 'YYYY-MM-DD' → Date（ローカル）
-const parseYmd = (s: string): Date => {
-  const [y, m, d] = s.split("-").map(Number);
-  return new Date(y, m - 1, d); // 月は0始まり
-};
-
-const toDate = (s: string | Date): Date => {
-  if (s instanceof Date) return s;
-  // 'YYYY-MM-DD' 前提でパース
-  return parseYmd(s);
-};
-
-// Date → 'YYYY-MM-DD'（ローカル）
-const fmtDate = (d: Date): string => {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-};
-
-const listByDate = computed<DayWithEvents[]>(() => {
-  const map: Record<string, EventItem[]> = {};
-
-  for (const e of events.value) {
-    const start = toDate(e.startDate);
-    const end = toDate(e.endDate);
-
-    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
-      if (process.dev) console.warn("[index] invalid date", e);
-      continue;
-    }
-
-    const d = new Date(start);
-    while (d <= end) {
-      const key = fmtDate(d); // ← ここ
-      if (!map[key]) map[key] = [];
-      map[key].push(e);
-      d.setDate(d.getDate() + 1);
-    }
-  }
-
-  const dates = Object.keys(map).sort();
-  return dates.map((date) => ({
-    date,
-    events: map[date] ?? [],
-  }));
-});
-
-// ===== 本日開催イベント =====
-const todayStr = fmtDate(new Date());
-
-const todayEvents = computed<EventItem[]>(() => {
-  const day = listByDate.value.find((d) => d.date === todayStr);
-  return day?.events ?? [];
-});
-
-// ===== タグ一覧 =====
-const allTags = computed<string[]>(() => {
-  const set = new Set<string>();
-  events.value.forEach((e) => e.tags.forEach((t) => set.add(t)));
-  return Array.from(set);
-});
+// 基本ロジックは composable に任せる
+const { listByDate, todayEvents, allTags } = useEventCalendar(rawDocs);
 
 // ===== 月選択（Swiper カレンダーと連動） =====
 const today = new Date();
@@ -128,19 +27,21 @@ const monthDays = computed<DayWithEvents[]>(() => {
   if (!year || !month) return [];
 
   // その月の最終日
-  const daysInMonth = new Date(year, month, 0).getDate(); // month は1-12なのでそのまま使える
+  const daysInMonth = new Date(year, month, 0).getDate();
 
   const result: DayWithEvents[] = [];
 
   for (let day = 1; day <= daysInMonth; day++) {
-    const dateStr = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const dateStr = `${year}-${String(month).padStart(2, "0")}-${String(
+      day
+    ).padStart(2, "0")}`;
 
     // もともとの listByDate（イベントがある日だけ）から探す
     const existing = listByDate.value.find((d) => d.date === dateStr);
 
     result.push({
       date: dateStr,
-      events: existing?.events ?? [], // イベントがなければ空配列
+      events: existing?.events ?? [],
     });
   }
 

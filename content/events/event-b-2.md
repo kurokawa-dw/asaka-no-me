@@ -1,15 +1,14 @@
 ---
 slug:
-title: 商店街スタンプラリー
+title: お風呂掃除大苦戦
 subtitle: はじめての人も常連さんも楽しめる！
 
-startDate: 2025-12-20
-endDate: 2025-12-31
+startDate: 2025-12-12
+endDate: 2025-12-12
 openingTime: 各店舗の営業時間内
 
 tags:
-  - 子ども向け
-  - 商店街
+  - 食べる
 
 placeName: ○○商店街エリア
 address: 〇〇県〇〇市〇〇町1-2-3

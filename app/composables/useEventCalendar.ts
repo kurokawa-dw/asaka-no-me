@@ -1,80 +1,144 @@
-// composables/useEventCalendar.ts
-import type { Ref } from "vue";
+// app/composables/useEventCalendar.ts
+import { computed, type Ref } from "vue";
 
-export type EventMeta = {
+export type EventItem = {
   slug: string;
   title: string;
-  subtitle?: string;
-  startDate: string; // YYYY-MM-DD
-  endDate: string; // YYYY-MM-DD
-  openingTime?: string;
+  startDate: string;
+  endDate: string;
   tags: string[];
-  placeName?: string;
-  isFree?: boolean;
 };
 
 export type DayWithEvents = {
-  date: string;
-  events: EventMeta[];
+  date: string; // 'YYYY-MM-DD'
+  events: EventItem[];
 };
 
-const toDate = (s: string | Date) => new Date(s);
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+// ---------- date utils（ローカル基準） ----------
+const parseYmd = (s: string): Date => {
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(y, m - 1, d);
+};
 
-// ✅ useAsyncData の型に合わせて undefined を許可
-export const useEventCalendar = (rawDocs: Ref<any[] | undefined>) => {
-  // ① MD → EventMeta 配列
-  const events = computed<EventMeta[]>(() => {
+const fmtYmd = (d: Date): string => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
+
+// ---------- slug utils ----------
+const slugFromStem = (stem?: string): string => {
+  // stem: 'events/event-a' → 'event-a'
+  if (!stem) return "";
+  const parts = stem.split("/");
+  return parts[parts.length - 1] ?? "";
+};
+
+const slugFromId = (id?: string): string => {
+  // id: 'events/events/event-a.md' → 'event-a'
+  if (!id) return "";
+  const base = id.split("/").pop() ?? "";
+  return base.replace(/\.(md|mdx|yml|yaml|json)$/i, "");
+};
+
+const assertUniqueSlugs = (
+  items: { slug: string; title: string; _source?: string }[]
+) => {
+  const map = new Map<string, { title: string; source?: string }[]>();
+
+  for (const it of items) {
+    const key = it.slug.trim();
+    if (!key) continue;
+    if (!map.has(key)) map.set(key, []);
+    map.get(key)!.push({ title: it.title, source: it._source });
+  }
+
+  const dup = Array.from(map.entries()).filter(([, arr]) => arr.length > 1);
+
+  if (dup.length) {
+    const msg =
+      "[useEventCalendar] slug が重複しています。slug はユニークにしてください。\n" +
+      dup
+        .map(([slug, arr]) => {
+          const lines = arr
+            .map((x) => `  - ${x.title}${x.source ? ` (${x.source})` : ""}`)
+            .join("\n");
+          return `slug: "${slug}"\n${lines}`;
+        })
+        .join("\n\n");
+
+    // dev は即気づけるように止める
+    if (process.dev) throw new Error(msg);
+
+    // 本番は最低でもログ（好みで throw にしてもOK）
+    console.error(msg);
+  }
+};
+
+export const useEventCalendar = (rawDocs: Ref<any[] | null | undefined>) => {
+  // MD → イベント配列（frontmatter整形）
+  const events = computed<EventItem[]>(() => {
     const docs = rawDocs.value ?? [];
 
     const mapped = docs
       .map((doc: any) => {
-        const start = doc.startDate;
-        const end = doc.endDate;
+        const meta = doc.meta ?? {};
 
-        return {
-          slug: String(doc.slug),
+        // ✅ slug の優先順位：
+        // 1) meta.slug（明示指定）
+        // 2) doc.stem の末尾（ファイル名相当）
+        // 3) doc.id の末尾（予備）
+        const fallbackSlug =
+          slugFromStem(doc.stem) ||
+          slugFromId(doc.id) ||
+          String(doc.slug ?? "");
+
+        const slug = String(meta.slug ?? fallbackSlug).trim();
+
+        const item: EventItem & { _source?: string } = {
+          slug,
           title: String(doc.title),
-          subtitle: doc.subtitle ? String(doc.subtitle) : undefined,
-          startDate: start,
-          endDate: end,
-          openingTime: doc.openingTime ? String(doc.openingTime) : undefined,
-          tags: Array.isArray(doc.tags)
-            ? doc.tags.map((t: any) => String(t))
+          startDate: String(meta.startDate ?? ""),
+          endDate: String(meta.endDate ?? ""),
+          tags: Array.isArray(meta.tags)
+            ? meta.tags.map((t: any) => String(t))
             : [],
-          placeName: doc.placeName ? String(doc.placeName) : undefined,
-          isFree: typeof doc.isFree === "boolean" ? doc.isFree : undefined,
-        } as EventMeta;
+          _source: doc.id ?? doc.stem,
+        };
+
+        return item;
       })
-      // start / end がないものは除外
-      .filter((e) => !!e.startDate && !!e.endDate);
+      // start / end が両方入っているものだけ残す
+      .filter((e) => e.startDate && e.endDate && e.slug);
+
+    // ✅ slug 重複チェック（devで即エラー）
+    assertUniqueSlugs(mapped);
 
     if (process.dev) {
-      console.log("[useEventCalendar] rawDocs", docs);
       console.log("[useEventCalendar] events(mapped)", mapped);
     }
 
-    return mapped;
+    // _source は外に出さない
+    return mapped.map(({ _source, ...rest }) => rest);
   });
 
-  // ② 日付ごとの展開
+  // 日付ごとの展開 listByDate（イベントがある日だけ）
   const listByDate = computed<DayWithEvents[]>(() => {
-    const map: Record<string, EventMeta[]> = {};
+    const map: Record<string, EventItem[]> = {};
 
     for (const e of events.value) {
-      const start = toDate(e.startDate);
-      const end = toDate(e.endDate);
+      const start = parseYmd(e.startDate);
+      const end = parseYmd(e.endDate);
 
       if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
-        if (process.dev) {
-          console.warn("[useEventCalendar] invalid date", e);
-        }
+        if (process.dev) console.warn("[useEventCalendar] invalid date", e);
         continue;
       }
 
       const d = new Date(start);
       while (d <= end) {
-        const key = fmt(d);
+        const key = fmtYmd(d);
         if (!map[key]) map[key] = [];
         map[key].push(e);
         d.setDate(d.getDate() + 1);
@@ -82,10 +146,9 @@ export const useEventCalendar = (rawDocs: Ref<any[] | undefined>) => {
     }
 
     const dates = Object.keys(map).sort();
-    const result = dates.map((date) => ({
+    const result: DayWithEvents[] = dates.map((date) => ({
       date,
-      // ✅ TS 的にも runtime 的にも必ず配列にする
-      events: (map[date] ?? []) as EventMeta[],
+      events: map[date] ?? [],
     }));
 
     if (process.dev) {
@@ -95,14 +158,15 @@ export const useEventCalendar = (rawDocs: Ref<any[] | undefined>) => {
     return result;
   });
 
-  // ③ 本日
-  const todayStr = fmt(new Date());
-  const todayEvents = computed<EventMeta[]>(() => {
+  // 本日開催イベント
+  const todayStr = fmtYmd(new Date());
+
+  const todayEvents = computed<EventItem[]>(() => {
     const day = listByDate.value.find((d) => d.date === todayStr);
     return day?.events ?? [];
   });
 
-  // ④ タグ一覧
+  // タグ一覧
   const allTags = computed<string[]>(() => {
     const set = new Set<string>();
     events.value.forEach((e) => e.tags.forEach((t) => set.add(t)));
