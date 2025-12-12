@@ -161,11 +161,9 @@ watch(
 
 <template>
   <main class="l-main">
-    <!-- <pre>{{ rawDocs }}</pre> -->
-    <!-- <pre>{{ listByDate }}</pre> -->
     <!-- ① 本日開催イベント -->
     <section class="section">
-      <h2>本日開催されているイベント</h2>
+      <h2 class="ttl">本日開催されているイベント</h2>
       <div v-if="todayEvents.length">
         <ul>
           <li v-for="event in todayEvents" :key="event.slug">
@@ -178,8 +176,7 @@ watch(
       <p v-else>本日のイベントはありません。</p>
     </section>
 
-    <section class="section">
-      <h2>カレンダー</h2>
+    <section class="section mt-8">
       <CalendarMonthSwiper
         :listByDate="listByDate"
         :selectedTag="selectedTag"
@@ -190,7 +187,7 @@ watch(
     </section>
 
     <!-- ③ タグフィルター -->
-    <section class="section">
+    <section class="section-tag-filter">
       <h2>タグで絞り込む</h2>
       <div class="tag-filter">
         <button
@@ -212,13 +209,13 @@ watch(
       </div>
     </section>
 
-    <section class="section">
-      <h2>イベント一覧（カレンダー形式）</h2>
+    <section class="section-day-list">
+      <h2 class="ttl">イベント一覧（カレンダー形式）</h2>
       <ul class="day-list">
         <li
           v-for="day in filteredListByDate"
           :key="day.date"
-          class="day-list__row mt-8"
+          class="day-list__row"
           :ref="(el) => setDayRef(day.date, el as HTMLElement | null)"
         >
           <div class="day-list__date">
@@ -245,10 +242,55 @@ watch(
 @use "@/assets/scss/mixin/" as *;
 @use "@/assets/scss/component/utiltyPlaceholders";
 @use "sass:math";
+.ttl {
+  font-size: 20px;
+  font-weight: 700;
+}
 
-li {
+a {
+  text-decoration: underline;
+}
+
+.section-tag-filter {
+  margin-top: rem(50);
+}
+
+.tag-filter {
+  display: flex;
+  gap: 10px;
+  button {
+    border-radius: 10px;
+    border: 1px solid #21e5ae;
+    @include pc {
+      padding: rem(10) rem(20);
+    }
+    @include sp {
+      padding: rem(5) rem(10);
+    }
+
+    &.is-active {
+      background-color: #21e5ae;
+    }
+  }
+}
+
+.section-day-list {
   @include pc {
-    // font-size: rem(20);
+    margin-top: rem(100);
+  }
+  @include sp {
+    margin-top: rem(50);
+  }
+}
+.day-list {
+  display: flex;
+  flex-direction: column;
+
+  li {
+    border-top: 1px solid #afafaf;
+    padding: rem(20) 0;
+    display: grid;
+    grid-template-columns: 100px 1fr;
   }
 }
 </style>

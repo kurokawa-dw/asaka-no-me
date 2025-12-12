@@ -73,3 +73,8 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## 注意
+
+@nuxtjs/google-fonts を変更したら
+node_modules/.cache/nuxt-google-fonts を削除すること

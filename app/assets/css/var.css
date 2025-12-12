@@ -12,5 +12,6 @@
     system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP",
     "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Yu Gothic UI",
     Meiryo, sans-serif;
+  --font-serif-jp: "Noto Serif Japanese", serif;
   --form-border: #848484;
 }

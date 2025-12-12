@@ -6,7 +6,12 @@ import matter from "gray-matter";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: ["@nuxt/content", "@nuxtjs/tailwindcss"],
+  devServer: {
+    host: "0.0.0.0", // 例: 固定したいなら '192.168.1.23'
+    port: 3000,
+    // https: { key: 'path/to/key.pem', cert: 'path/to/cert.pem' } // HTTPSにしたい場合
+  },
+  modules: ["@nuxtjs/google-fonts", "@nuxt/content", "@nuxtjs/tailwindcss"],
 
   nitro: {
     prerender: {
@@ -20,6 +25,18 @@ export default defineNuxtConfig({
     "@/assets/css/var.css", // その上に自分のベース（任意）
     "@/assets/scss/main.scss", // その上に自分のベース（任意）
   ],
+  googleFonts: {
+    families: {
+      // Google Fonts上のファミリー名そのまま
+      "Noto Serif JP": {
+        wght: [400, 500, 600, 700], // 使うウェイトだけ
+      },
+    },
+    display: "swap",
+    // 速度優先なら（可変）
+    // download: true, // ビルド時にDLして自己ホストしたい場合
+    // preconnect: true,
+  },
 
   tailwindcss: {
     cssPath: "@/assets/css/tailwind.css",
