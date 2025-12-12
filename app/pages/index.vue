@@ -15,17 +15,6 @@ const { listByDate, todayEvents, allTags } = useEventCalendar(rawDocs);
 const today = new Date();
 const currentYearMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`; // 'YYYY-MM'
 
-const initialMonth =
-  typeof route.query.month === "string" &&
-  /^\d{4}-\d{2}$/.test(route.query.month)
-    ? route.query.month
-    : currentYearMonth;
-
-const initialTag =
-  typeof route.query.tag === "string" && route.query.tag.length > 0
-    ? route.query.tag
-    : null;
-
 const selectedMonth = ref<string>(currentYearMonth);
 
 // 選択中の「月の全日」を作る（イベントがない日も含める）
