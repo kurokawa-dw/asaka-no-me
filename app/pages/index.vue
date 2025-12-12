@@ -218,7 +218,7 @@ watch(
         <li
           v-for="day in filteredListByDate"
           :key="day.date"
-          class="day-list__row"
+          class="day-list__row mt-8"
           :ref="(el) => setDayRef(day.date, el as HTMLElement | null)"
         >
           <div class="day-list__date">
@@ -239,3 +239,16 @@ watch(
     </section>
   </main>
 </template>
+
+<style scoped lang="scss">
+@use "@/assets/scss/variable" as *;
+@use "@/assets/scss/mixin/" as *;
+@use "@/assets/scss/component/utiltyPlaceholders";
+@use "sass:math";
+
+li {
+  @include pc {
+    // font-size: rem(20);
+  }
+}
+</style>

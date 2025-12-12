@@ -1,0 +1,102 @@
+@use "../variable" as *;
+@use "../mixin" as *;
+@use "../component/utiltyPlaceholders" as *;
+@use "sass:math";
+
+html {
+	scroll-padding-top: 100px;
+
+	@include pc {
+		font-size: 62.5%;
+	}
+
+	@include tab {
+		font-size: calc(1vw * 1000 / $vwViewPortPc);
+	}
+
+	@include sp {
+		font-size: calc(1vw * 1000 / $vwViewPort);
+	}
+}
+
+body {
+	width: 100%;
+	max-width: 100%;
+	color: var(--base-fc);
+	background-color: var(--base-bgc);
+	line-height: 1.6;
+	font-weight: 400;
+	font-family: var(--base-ff);
+	position: relative;
+
+	transition: color .3s;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	@include pc {
+		font-size: 14px;
+	}
+
+	// @include tab {
+	// 	font-size: rem(30);
+	// }
+
+	@include sp {
+		font-size: min(14px, rem(14));
+		line-height: 1.7;
+	}
+
+}
+
+button,
+input,
+textarea,
+select {
+	font-family: var(--base-ff);
+	background-color: transparent;
+	appearance: none;
+	border: none;
+}
+
+a {
+	color: var(--base-fc);
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+////////////////////////////////////////////////////////////
+// pc sp
+////////////////////////////////////////////////////////////
+.view-sp {
+	@include pc {
+		display: none !important;
+	}
+}
+
+.view-pc {
+	@include sp {
+		display: none !important;
+	}
+}
+
+#wrap {
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+}
+
+.is-nav-op {
+	@include sp {
+		overflow: hidden;
+		--base-fc: #fff;
+	}
+}
+
+.dark-mode {
+	--base-fc: #fff;
+	--base-bgc: #000;
+}

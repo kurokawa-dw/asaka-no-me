@@ -1,0 +1,228 @@
+@use "../variable/" as *;
+@use "../mixin" as *;
+
+////////////////////////////////////////////////////////////
+//  u-xxxxxxxx
+////////////////////////////////////////////////////////////
+
+%u-bold {
+	font-weight: 700;
+}
+
+%u-mid {
+	font-weight: 500;
+}
+
+%u-hidden {
+	display: none !important;
+}
+
+%u-no-click {
+	pointer-events: none;
+}
+
+%u-base-fit {
+	width: 100%;
+}
+
+%u-color-red {
+	color: var(--c-red);
+}
+
+
+
+%u-shadow {
+	filter: drop-shadow(rem(0) rem(0) rem(50) rgba(#000, 0.1));
+	transform: translate3d(0, 0, 0);
+}
+
+%u-sp-tellink {
+	pointer-events: none;
+}
+
+%u-align-center {
+	text-align: center;
+}
+
+%u-underline {
+	text-decoration: underline;
+}
+
+%u-link-underline {
+	text-decoration: underline;
+	cursor: pointer;
+
+	@media (hover: hover) {
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+%u-hv-underline {
+	@media (hover: hover) {
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////
+// img
+////////////////////////////////////////////////////////////
+%u-img-100 {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+%u-img-cover {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+////////////////////////////////////////////////////////////
+// layout
+////////////////////////////////////////////////////////////
+%u-l-flex {
+	display: flex;
+	flex-wrap: wrap;
+
+	&.--spbet {
+		justify-content: space-between;
+	}
+}
+
+%u-l-flex-pc {
+	@media only screen and (min-width: ($breakpoint + 1)) {
+		display: flex;
+		flex-wrap: wrap;
+
+		&.--spbet {
+			justify-content: space-between;
+		}
+	}
+}
+
+%u-l-flex-sp {
+	@media only screen and (max-width: $breakpoint) {
+		display: flex;
+		flex-wrap: wrap;
+
+		&.--spbet {
+			justify-content: space-between;
+		}
+	}
+}
+
+%u-l-inner-wrap {
+	margin-inline: auto;
+	position: relative;
+	z-index: 1;
+
+	@media only screen and (min-width: ($breakpoint + 1)) {
+		width: rem(1100);
+	}
+
+	@media only screen and (max-width: $breakpoint) {
+		width: rem(325);
+	}
+
+	&.--1000 {
+		@media only screen and (min-width: ($breakpoint + 1)) {
+			width: rem(1000);
+		}
+
+		@media only screen and (max-width: $breakpoint) {
+			width: rem(690);
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////
+// margin %u-mt-1~%u-mt-50 em
+////////////////////////////////////////////////////////////
+%u-mt-05 {
+	margin-top: 0.5em;
+}
+
+%u-mb-05 {
+	margin-bottom: 0.5em;
+}
+
+%u-ml-05 {
+	margin-left: 0.5em;
+}
+
+%u-mr-05 {
+	margin-right: 0.5em;
+}
+
+@for $i from 1 through 50 {
+	%u-mt-#{$i} {
+		margin-top: $i * 1em;
+	}
+}
+
+@for $i from 1 through 50 {
+	%u-mb-#{$i} {
+		margin-bottom: $i * 1em;
+	}
+}
+
+@for $i from 1 through 50 {
+	%u-ml-#{$i} {
+		margin-left: $i * 1em;
+	}
+}
+
+@for $i from 1 through 50 {
+	%u-mr-#{$i} {
+		margin-right: $i * 1em;
+	}
+}
+
+////////////////////////////////////////////////////////////
+// padding %u-mt-1~%u-mt-50 em
+////////////////////////////////////////////////////////////
+%u-pt-05 {
+	padding-top: 0.5em;
+}
+
+%u-pb-05 {
+	padding-bottom: 0.5em;
+}
+
+%u-pl-05 {
+	padding-left: 0.5em;
+}
+
+%u-pr-05 {
+	padding-right: 0.5em;
+}
+
+@for $i from 1 through 50 {
+	%u-pt-#{$i} {
+		padding-top: $i * 1em;
+	}
+}
+
+@for $i from 1 through 50 {
+	%u-pb-#{$i} {
+		padding-bottom: $i * 1em;
+	}
+}
+
+@for $i from 1 through 50 {
+	%u-pl-#{$i} {
+		padding-left: $i * 1em;
+	}
+}
+
+@for $i from 1 through 50 {
+	%u-pr-#{$i} {
+		padding-right: $i * 1em;
+	}
+}

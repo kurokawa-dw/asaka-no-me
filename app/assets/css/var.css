@@ -1,0 +1,16 @@
+:root {
+  --base-bgc: #fff;
+  --base-fc: #000;
+  --c-red: #d44848;
+  --dark-bgc: #181818;
+  /* --base-ff:
+    firple, "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic",
+    "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo",
+    "Osaka", "ＭＳ Ｐゴシック", "MS P Gothic", Verdana, Arial, Helvetica,
+    sans-serif; */
+  --base-ff:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP",
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Yu Gothic UI",
+    Meiryo, sans-serif;
+  --form-border: #848484;
+}

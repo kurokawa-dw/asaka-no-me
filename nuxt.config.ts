@@ -6,13 +6,23 @@ import matter from "gray-matter";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: ["@nuxt/content"],
+  modules: ["@nuxt/content", "@nuxtjs/tailwindcss"],
 
   nitro: {
     prerender: {
       crawlLinks: true,
       routes: ["/"], // 念のため
     },
+  },
+
+  css: [
+    // "the-new-css-reset/css/reset.css", // パッケージのCSSを直接読み込み
+    "@/assets/css/var.css", // その上に自分のベース（任意）
+    "@/assets/scss/main.scss", // その上に自分のベース（任意）
+  ],
+
+  tailwindcss: {
+    cssPath: "@/assets/css/tailwind.css",
   },
 
   hooks: {
