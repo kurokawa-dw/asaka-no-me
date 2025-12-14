@@ -78,3 +78,10 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 @nuxtjs/google-fonts を変更したら
 node_modules/.cache/nuxt-google-fonts を削除すること
+
+## node
+
+```
+node -v
+v24.2.0
+```
