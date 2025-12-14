@@ -151,79 +151,26 @@ watch(
 <template>
   <main class="l-main">
     <PagesTopKv />
-    <!-- ① 本日開催イベント -->
-    <section class="section">
-      <h2 class="ttl">本日開催されているイベント</h2>
-      <div v-if="todayEvents.length">
-        <ul>
-          <li v-for="event in todayEvents" :key="event.slug">
-            <NuxtLink :to="`/event/${event.slug}`">
-              {{ event.title }}
-            </NuxtLink>
-          </li>
-        </ul>
-      </div>
-      <p v-else>本日のイベントはありません。</p>
-    </section>
 
-    <section class="section mt-8">
-      <UiCalendarMonthSwiper
-        :listByDate="listByDate"
-        :selectedTag="selectedTag"
-        :currentMonth="selectedMonth"
-        @month-change="selectedMonth = $event"
-        @date-click="scrollToDate"
-      />
-    </section>
+    <PagesTopTodayEvent :today-events="todayEvents" />
+
+    <UiCalendarMonthSwiper
+      :listByDate="listByDate"
+      :selectedTag="selectedTag"
+      :currentMonth="selectedMonth"
+      @month-change="selectedMonth = $event"
+      @date-click="scrollToDate"
+    />
 
     <!-- ③ タグフィルター -->
-    <section class="section-tag-filter">
-      <h2>タグで絞り込む</h2>
-      <div class="tag-filter">
-        <button
-          type="button"
-          :class="{ 'is-active': selectedTag === null }"
-          @click="selectedTag = null"
-        >
-          すべて
-        </button>
-        <button
-          v-for="tag in allTags"
-          :key="tag"
-          type="button"
-          :class="{ 'is-active': selectedTag === tag }"
-          @click="selectedTag = tag"
-        >
-          {{ tag }}
-        </button>
-      </div>
-    </section>
+    <PagesTopTagFilter :all-tags="allTags" v-model:selectedTag="selectedTag" />
 
-    <section class="section-day-list">
-      <h2 class="ttl">イベント一覧（カレンダー形式）</h2>
-      <ul class="day-list">
-        <li
-          v-for="day in filteredListByDate"
-          :key="day.date"
-          class="day-list__row"
-          :ref="(el) => setDayRef(day.date, el as HTMLElement | null)"
-        >
-          <div class="day-list__date">
-            {{ formatDisplayDate(day.date) }}
-          </div>
-          <div class="day-list__events">
-            <template v-if="day.events.length">
-              <p v-for="event in day.events" :key="event.slug">
-                <NuxtLink :to="`/event/${event.slug}`">
-                  {{ event.title }}
-                </NuxtLink>
-              </p>
-            </template>
-            <p v-else class="day-list__no-event">イベントなし</p>
-          </div>
-        </li>
-      </ul>
-    </section>
+    <!-- 日別一覧 -->
+    <PagesTopDayList
+      :filtered-list-by-date="filteredListByDate"
+      :format-display-date="formatDisplayDate"
+      @set-day-ref="({ date, el }) => setDayRef(date, el)"
+    />
   </main>
 </template>
 

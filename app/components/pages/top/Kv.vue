@@ -94,14 +94,14 @@ onMounted(() => {
     width: rem(880);
     aspect-ratio: 500 / 288;
     position: absolute;
-    right: 5px;
-    bottom: -100px;
+    right: rem(5);
+    bottom: rem(-100);
     // font-family: "Zen Maru Gothic", sans-serif;
-    font-size: 14px;
+    font-size: rem(12);
 
     svg {
       path {
-        stroke-width: 2px;
+        stroke-width: 1px;
       }
     }
   }

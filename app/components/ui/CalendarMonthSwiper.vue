@@ -139,61 +139,98 @@ onMounted(() => {
 <template>
   <!-- Swiper は client-only で動かしたいので、Nuxt の ClientOnly で包むと安全 -->
   <ClientOnly>
-    <div class="calendar-swiper">
-      <Swiper
-        :slides-per-view="1"
-        :centered-slides="true"
-        :initial-slide="initialIndex"
-        @slideChange="onSlideChange"
-      >
-        <SwiperSlide v-for="(m, idx) in monthsWindow" :key="m.key">
-          <div class="calendar-swiper__month">
-            <div class="calendar-swiper__header">
-              <span class="calendar-swiper__title">
-                {{ m.label }}
-              </span>
-            </div>
-
-            <div class="calendar-swiper__weekdays">
-              <div
-                v-for="w in weekdays"
-                :key="w"
-                class="calendar-swiper__weekday"
-              >
-                {{ w }}
-              </div>
-            </div>
-
-            <div class="calendar-swiper__grid">
-              <div
-                v-for="(cell, i) in buildCalendarCells(m.year, m.month)"
-                :key="`${m.key}-${i}`"
-                class="calendar-swiper__cell"
-                :class="{
-                  'calendar-swiper__cell--empty': cell.dayNumber === null,
-                  'calendar-swiper__cell--has-event': cell.hasEvents,
-                  'calendar-swiper__cell--clickable': cell.hasEvents,
-                }"
-                @click="onDateClick(cell)"
-              >
-                <span v-if="cell.dayNumber !== null">
-                  {{ cell.dayNumber }}
+    <div class="calender-section">
+      <p class="label">カレンダー</p>
+      <div class="calendar-swiper">
+        <Swiper
+          :slides-per-view="1"
+          :centered-slides="true"
+          :initial-slide="initialIndex"
+          @slideChange="onSlideChange"
+        >
+          <SwiperSlide v-for="(m, idx) in monthsWindow" :key="m.key">
+            <div class="calendar-swiper__month">
+              <div class="calendar-swiper__header">
+                <span class="calendar-swiper__title">
+                  {{ m.label }}
                 </span>
               </div>
+
+              <div class="calendar-swiper__weekdays">
+                <div
+                  v-for="w in weekdays"
+                  :key="w"
+                  class="calendar-swiper__weekday"
+                >
+                  {{ w }}
+                </div>
+              </div>
+
+              <div class="calendar-swiper__grid">
+                <div
+                  v-for="(cell, i) in buildCalendarCells(m.year, m.month)"
+                  :key="`${m.key}-${i}`"
+                  class="calendar-swiper__cell"
+                >
+                  <div
+                    class="calendar-swiper__cell__inner"
+                    :class="{
+                      'calendar-swiper__cell--empty': cell.dayNumber === null,
+                      'calendar-swiper__cell--has-event': cell.hasEvents,
+                      'calendar-swiper__cell--clickable': cell.hasEvents,
+                    }"
+                    @click="onDateClick(cell)"
+                  >
+                    <span v-if="cell.dayNumber !== null">
+                      {{ cell.dayNumber }}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </SwiperSlide>
-      </Swiper>
+          </SwiperSlide>
+        </Swiper>
+      </div>
     </div>
   </ClientOnly>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@use "@/assets/scss/variable" as *;
+@use "@/assets/scss/mixin/" as *;
+@use "@/assets/scss/component/utiltyPlaceholders";
+@use "sass:math";
+
+.calender-section {
+  width: rem(1024);
+  margin: rem(100) auto 0;
+  border: 1px solid #000;
+  border-radius: rem(20);
+  padding: rem(30) rem(30) rem(30);
+  position: relative;
+
+  @include sp {
+    width: rem(360);
+  }
+}
+
+.label {
+  border: 1px solid #000;
+  background: #fff;
+  border-radius: rem(100);
+  position: absolute;
+  top: rem(-20);
+  left: rem(30);
+  padding: rem(5) rem(20);
+  // font-weight: 700;
+  text-align: center;
+  font-size: rem(14);
+}
+
 .calendar-swiper {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px;
-  max-width: 420px;
+  // border: 1px solid #ddd;
+  // padding: 12px;
+  // max-width: 420px;
 }
 
 .calendar-swiper__month {
@@ -207,7 +244,8 @@ onMounted(() => {
 }
 
 .calendar-swiper__title {
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 24px;
 }
 
 .calendar-swiper__weekdays,
@@ -224,12 +262,22 @@ onMounted(() => {
 }
 
 .calendar-swiper__cell {
-  aspect-ratio: 1 / 1;
+  // aspect-ratio: 1 / 1;
   border-radius: 4px;
   font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &__inner {
+    width: 50%;
+    aspect-ratio: 1 /1;
+    padding: 10px 0;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .calendar-swiper__cell--empty {
