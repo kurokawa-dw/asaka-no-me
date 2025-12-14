@@ -4,7 +4,7 @@
   "editor.suggest.showFiles": true,
   "html.format.wrapLineLength": 1000,
   "path-autocomplete.pathMappings": {
-    "/": "${folder}/nuxt-app/public/"
+    "/": "${folder}/public/"
   },
 
   // 保存時にフォーマット

@@ -116,7 +116,7 @@ export const useEventCalendar = (rawDocs: Ref<any[] | null | undefined>) => {
     assertUniqueSlugs(mapped);
 
     if (process.dev) {
-      console.log("[useEventCalendar] events(mapped)", mapped);
+      // console.log("[useEventCalendar] events(mapped)", mapped);
     }
 
     // _source は外に出さない
@@ -152,7 +152,7 @@ export const useEventCalendar = (rawDocs: Ref<any[] | null | undefined>) => {
     }));
 
     if (process.dev) {
-      console.log("[useEventCalendar] listByDate", result);
+      // console.log("[useEventCalendar] listByDate", result);
     }
 
     return result;

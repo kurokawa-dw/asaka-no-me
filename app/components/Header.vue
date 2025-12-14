@@ -2,7 +2,7 @@
 
 <template>
   <header class="l-header">
-    <p class="logo">
+    <!-- <p class="logo">
       <span class="asaka">アサカ</span><span class="no">の</span
       ><span class="me">目👁️👁️</span>
     </p>
@@ -10,7 +10,7 @@
       <p>朝霧じゃないよ朝霞だよ</p>
       <p>目黒川じゃないよ黒目川だよ</p>
       <p>ASKAじゃないよASAKAだよ</p>
-    </div>
+    </div> -->
   </header>
 </template>
 
@@ -21,8 +21,9 @@
 @use "sass:math";
 
 .l-header {
-  border-bottom: 1px solid #bdbdbd;
-  padding-bottom: rem(10);
+  // border-bottom: 1px solid #bdbdbd;
+  // padding-bottom: rem(10);
+  // background-color: #f8ff2a;
 }
 
 .logo {

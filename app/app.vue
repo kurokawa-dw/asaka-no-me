@@ -13,8 +13,8 @@
 @use "sass:math";
 .page-contents {
   @include pc {
-    width: rem(1280);
-    margin: rem(100) auto 0;
+    // width: rem(1280);
+    // margin: rem(100) auto 0;
   }
 
   @include sp {

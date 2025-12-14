@@ -150,6 +150,7 @@ watch(
 
 <template>
   <main class="l-main">
+    <PagesTopKv />
     <!-- ① 本日開催イベント -->
     <section class="section">
       <h2 class="ttl">本日開催されているイベント</h2>
@@ -166,7 +167,7 @@ watch(
     </section>
 
     <section class="section mt-8">
-      <CalendarMonthSwiper
+      <UiCalendarMonthSwiper
         :listByDate="listByDate"
         :selectedTag="selectedTag"
         :currentMonth="selectedMonth"

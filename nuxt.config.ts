@@ -11,7 +11,11 @@ export default defineNuxtConfig({
     port: 3000,
     // https: { key: 'path/to/key.pem', cert: 'path/to/cert.pem' } // HTTPSにしたい場合
   },
-  modules: ["@nuxtjs/google-fonts", "@nuxt/content", "@nuxtjs/tailwindcss"],
+  modules: [
+    // "@nuxtjs/google-fonts",
+    "@nuxt/content",
+    "@nuxtjs/tailwindcss",
+  ],
 
   nitro: {
     prerender: {
@@ -20,23 +24,49 @@ export default defineNuxtConfig({
     },
   },
 
+  app: {
+    head: {
+      title: "朝霞の目",
+      link: [
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        {
+          rel: "preconnect",
+          href: "https://fonts.gstatic.com",
+          crossorigin: "",
+        },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;700&display=swap",
+        },
+      ],
+      // link: [
+      //   { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      //   {
+      //     rel: "preconnect",
+      //     href: "https://fonts.gstatic.com",
+      //     crossorigin: "",
+      //   },
+      //   {
+      //     rel: "stylesheet",
+      //     href: "https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Zen+Maru+Gothic:wght@400;700&display=swap",
+      //   },
+      // ],
+    },
+  },
+
   css: [
     // "the-new-css-reset/css/reset.css", // パッケージのCSSを直接読み込み
     "@/assets/css/var.css", // その上に自分のベース（任意）
     "@/assets/scss/main.scss", // その上に自分のベース（任意）
   ],
-  googleFonts: {
-    families: {
-      // Google Fonts上のファミリー名そのまま
-      "Noto Serif JP": {
-        wght: [400, 500, 600, 700], // 使うウェイトだけ
-      },
-    },
-    display: "swap",
-    // 速度優先なら（可変）
-    // download: true, // ビルド時にDLして自己ホストしたい場合
-    // preconnect: true,
-  },
+  // googleFonts: {
+  //   families: {
+  //     "Noto Serif JP": { wght: [400, 500, 600, 700] },
+  //     "Zen Maru Gothic": { wght: [400, 700] },
+  //   },
+  //   display: "swap",
+  //   download: false, // ← これを明示（ローカル生成をやめる）
+  // },
 
   tailwindcss: {
     cssPath: "@/assets/css/tailwind.css",

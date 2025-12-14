@@ -130,6 +130,10 @@ const buildCalendarCells = (year: number, month: number): CalendarCell[] => {
 };
 
 const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
+
+onMounted(() => {
+  // console.log(buildCalendarCells(2026, 1), "a");
+});
 </script>
 
 <template>

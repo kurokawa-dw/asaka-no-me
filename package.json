@@ -14,6 +14,7 @@
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "better-sqlite3": "^12.5.0",
+    "gsap": "^3.14.2",
     "nuxt": "^4.2.2",
     "sass-embedded": "^1.96.0",
     "swiper": "^12.0.3",
