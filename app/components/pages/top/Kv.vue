@@ -31,7 +31,7 @@ onMounted(() => {
 <template>
   <div class="kv">
     <h1 class="kv__logo">
-      <img src="/images/top/kv_logo.svg" alt="朝霞の目" />
+      <img src="/images/common/logo.svg" alt="朝霞の目" />
     </h1>
     <h2 class="kv__copy">〜勝手に朝霞のイベントまとめちゃう〜<br />非公式</h2>
 
@@ -77,7 +77,7 @@ onMounted(() => {
   gap: rem(40);
   position: relative;
   &__logo {
-    width: rem(334);
+    width: rem(404);
   }
 
   &__copy {

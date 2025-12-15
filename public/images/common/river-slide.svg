@@ -1,4 +1,20 @@
-<svg id="river-flow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 702.65 404.93">
-<path id="flowPath" d="M15.69,367.08c91.26-124.08,205.83-29.74,300.02-128.5,97.41-105.05,245.28-21.48,373.36-194.24" style="fill:none;"/>
-<path id="topPath" d="M2,324.74c86.51-122.54,202.61-23.45,295.26-126.96,92.66-103.51,246.82-16.72,378.12-195.78" style="fill:none; stroke:#000; stroke-linecap:round; stroke-width:4px;"/><path id="bottomPath" d="M27.27,402.93c96.02-125.62,209.05-36.04,304.78-130.04,102.17-106.59,243.75-26.23,368.6-192.7" style="fill:none; stroke:#000; stroke-linecap:round; stroke-width:4px;"/>
-</svg>
+<svg id="river-flow" viewBox="0 0 702.65 404.93">
+        <path
+          id="flowPath"
+          d="M15.69,367.08c91.26-124.08,205.83-29.74,300.02-128.5,97.41-105.05,245.28-21.48,373.36-194.24"
+          style="fill: none"
+        />
+        <path
+          id="topPath"
+          d="M2,324.74c86.51-122.54,202.61-23.45,295.26-126.96,92.66-103.51,246.82-16.72,378.12-195.78"
+          style="fill: none; stroke: #000; stroke-linecap: round"
+        />
+        <path
+          id="bottomPath"
+          d="M27.27,402.93c96.02-125.62,209.05-36.04,304.78-130.04,102.17-106.59,243.75-26.23,368.6-192.7"
+          style="fill: none; stroke: #000; stroke-linecap: round"
+        />
+        <text fill="#000" opacity="0.9">
+          <textPath id="tp" href="#flowPath" startOffset="0"></textPath>
+        </text>
+      </svg>
