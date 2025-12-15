@@ -9,10 +9,17 @@ type DayWithEvents = {
   events: EventItem[];
 };
 
-defineProps<{
+const props = defineProps<{
   filteredListByDate: DayWithEvents[];
   formatDisplayDate: (dateStr: string) => string;
 }>();
+
+const activeDay = computed(() => {
+  return props.filteredListByDate.filter((day) => day.events.length);
+});
+
+// イベントがない表示させたい場合は filteredListByDate
+// イベントがある日のみを表示する場合は activeDay
 
 const emit = defineEmits<{
   (e: "set-day-ref", payload: { date: string; el: HTMLElement | null }): void;
@@ -29,7 +36,7 @@ const onSetRef = (date: string, el: Element | null) => {
 
     <ul class="day-list">
       <li
-        v-for="day in filteredListByDate"
+        v-for="day in activeDay"
         :key="day.date"
         class="day-list__row"
         :ref="(el) => onSetRef(day.date, el)"
@@ -53,3 +60,20 @@ const onSetRef = (date: string, el: Element | null) => {
     </ul>
   </section>
 </template>
+
+<style lang="scss" scoped>
+@use "@/assets/scss/variable" as *;
+@use "@/assets/scss/mixin/" as *;
+@use "@/assets/scss/component/utiltyPlaceholders";
+@use "sass:math";
+.section-day-list {
+  width: rem(1024);
+  margin: rem(20) auto;
+}
+.day-list {
+  li {
+    padding: 20px 0;
+    border-top: 1px solid #000;
+  }
+}
+</style>

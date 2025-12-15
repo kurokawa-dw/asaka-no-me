@@ -54,7 +54,6 @@ const selectedTag = ref<string | null>(null);
 
 const filteredListByDate = computed<DayWithEvents[]>(() => {
   const base = monthDays.value;
-
   if (!selectedTag.value) return base;
 
   return base.map((day) => ({
