@@ -22,7 +22,7 @@ const setTag = (tag: string | null) => emit("update:selectedTag", tag);
         class="button"
         @click="setTag(null)"
       >
-        <span class="button__label">すべて</span>
+        <span class="button__label">すべて!</span>
       </button>
 
       <button

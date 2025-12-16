@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { $gsap } = useNuxtApp();
 
-const tpRef = ref<HTMLAllCollection | null>(null);
+const tpRef = ref<HTMLDivElement | null>(null);
 onMounted(() => {
   // const tp = document.querySelector("#tp");
 
@@ -87,7 +87,7 @@ onMounted(() => {
   gap: rem(40);
   position: relative;
   @include pc {
-    padding: rem(150) 0;
+    padding: rem(150) 0 rem(120);
   }
   @include sp {
     padding: rem(100) 0;
@@ -106,23 +106,17 @@ onMounted(() => {
     letter-spacing: 0.15em;
     text-align: center;
     font-size: rem(14);
-    @include pc {
-    }
-    @include sp {
-      // font-size: rem(10);
-    }
   }
 
   &__river {
     // opacity: 0.5;
     aspect-ratio: 500 / 288;
     position: absolute;
-    // font-family: "Zen Maru Gothic", sans-serif;
 
     @include pc {
-      width: rem(500);
+      width: rem(700);
       right: rem(5);
-      bottom: rem(-0);
+      bottom: rem(-100);
       font-size: rem(12);
     }
 

@@ -47,7 +47,7 @@ defineProps<{
     width: rem($pcBaseW);
     padding: rem(50) rem(30) rem(40);
     border-radius: rem(20);
-    margin-top: rem(180);
+    // margin-top: rem(180);
   }
 
   @include sp {
@@ -65,6 +65,7 @@ defineProps<{
   inset-inline: 0;
   margin: auto;
   text-align: center;
+  border-radius: rem(100);
   @include pc {
     font-size: rem(14);
     top: rem(-28);

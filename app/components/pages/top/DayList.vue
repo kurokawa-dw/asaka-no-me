@@ -70,7 +70,7 @@ watch(
     <div class="list-header">
       <h2 class="year-month u-ff-maru">
         <span class="num">{{ year }}</span
-        ><span class="fz-s">年 </span><sapn class="num"> {{ month }} </sapn
+        ><span class="fz-s">年 </span><span class="num"> {{ month }} </span
         ><span class="fz-s">月 の</span>イベント一覧
       </h2>
     </div>
