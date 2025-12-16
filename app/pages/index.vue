@@ -63,12 +63,20 @@ const filteredListByDate = computed<DayWithEvents[]>(() => {
 });
 
 // ===== 日付表示（12/1(日) みたいな表示用） =====
-const formatDisplayDate = (dateStr: string) => {
+
+const formatDisplayDate = (
+  dateStr: string
+): { m: number; day: number; w: string } => {
   const d = new Date(dateStr);
   const m = d.getMonth() + 1;
   const day = d.getDate();
   const w = ["日", "月", "火", "水", "木", "金", "土"][d.getDay()];
-  return `${m}/${day}（${w}）`;
+  return {
+    m,
+    day,
+    w,
+  };
+  // return `${m}/${day}（${w}）`;
 };
 
 // 日付ごとの行要素を保持する ref
@@ -178,55 +186,4 @@ watch(
 @use "@/assets/scss/mixin/" as *;
 @use "@/assets/scss/component/utiltyPlaceholders";
 @use "sass:math";
-.ttl {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-a {
-  text-decoration: underline;
-}
-
-.section-tag-filter {
-  margin-top: rem(50);
-}
-
-.tag-filter {
-  display: flex;
-  gap: 10px;
-  button {
-    border-radius: 10px;
-    border: 1px solid #21e5ae;
-    @include pc {
-      padding: rem(10) rem(20);
-    }
-    @include sp {
-      padding: rem(5) rem(10);
-    }
-
-    &.is-active {
-      background-color: #21e5ae;
-    }
-  }
-}
-
-.section-day-list {
-  @include pc {
-    margin-top: rem(100);
-  }
-  @include sp {
-    margin-top: rem(50);
-  }
-}
-.day-list {
-  display: flex;
-  flex-direction: column;
-
-  li {
-    border-top: 1px solid #afafaf;
-    padding: rem(20) 0;
-    display: grid;
-    grid-template-columns: 100px 1fr;
-  }
-}
 </style>

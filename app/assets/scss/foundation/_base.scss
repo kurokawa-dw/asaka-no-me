@@ -4,7 +4,7 @@
 @use "sass:math";
 
 html {
-  scroll-padding-top: 100px;
+  scroll-padding-top: 50px;
 
   @include pc {
     font-size: 62.5%;
@@ -35,12 +35,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   @include pc {
-    font-size: 14px;
+    font-size: 16px;
   }
-
-  // @include tab {
-  // 	font-size: rem(30);
-  // }
 
   @include sp {
     font-size: min(14px, rem(14));

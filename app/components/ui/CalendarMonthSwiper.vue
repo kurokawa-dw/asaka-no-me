@@ -1,8 +1,8 @@
 <!-- components/CalendarMonthSwiper.vue -->
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
 import { Navigation } from "swiper/modules";
+import "swiper/css";
 
 import type { DayWithEvents } from "~/composables/useEventCalendar";
 
@@ -19,6 +19,8 @@ const emit = defineEmits<{
 
 const onDateClick = (cell: CalendarCell) => {
   if (!cell.dateStr || !cell.hasEvents) return;
+
+  console.log(cell);
   emit("date-click", cell.dateStr); // 'YYYY-MM-DD'
 };
 
@@ -148,7 +150,7 @@ const buildCalendarCells = (year: number, month: number): CalendarCell[] => {
   return cells;
 };
 
-const weekdays = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
 
 onMounted(() => {
   // console.log(buildCalendarCells(2026, 1), "a");
@@ -162,9 +164,9 @@ const nextRef = ref<HTMLElement | null>(null);
   <!-- Swiper は client-only で動かしたいので、Nuxt の ClientOnly で包むと安全 -->
   <ClientOnly>
     <div class="calender-section">
-      <p class="label">
+      <!-- <p class="label">
         <img src="/images/top/ttl-label-calener.svg" alt="カレンダー" />
-      </p>
+      </p> -->
       <div class="calendar-swiper">
         <Swiper
           :slides-per-view="1"
@@ -246,46 +248,38 @@ const nextRef = ref<HTMLElement | null>(null);
 @use "sass:math";
 
 .calender-section {
-  width: rem(1024);
-  margin: rem(150) auto 0;
-  // border: 1px solid #000;
-  // border-radius: rem(20);
-  // padding: rem(30) rem(30) rem(30);
   position: relative;
+  margin-inline: auto;
+
+  @include pc {
+    width: rem($pcBaseW);
+    margin-top: rem(50);
+  }
 
   @include sp {
-    width: rem(360);
+    width: rem($spBaseW);
+    margin-top: rem(30);
   }
 }
 
-.label {
-  // border: 1px solid #000;
-  // background: #fff;
-  // border-radius: rem(100);
-  // position: absolute;
-  // top: rem(-30);
-  // inset-inline: 0;
-  // margin: auto;
-  // padding: rem(5) rem(20);
-  width: max-content;
-  margin-inline: auto;
-  // font-weight: 700;
-  // text-align: center;
-  // font-size: rem(14);
-  img {
-    width: rem(120);
-  }
-}
+// .label {
+//   width: max-content;
+//   margin-inline: auto;
+//   img {
+//     width: rem(120);
+//   }
+// }
 
 .calendar-swiper {
-  margin-top: rem(20);
-  // border: 1px solid #ddd;
-  padding: 0 rem(50);
-  // padding: 12px;
-  // max-width: 420px;
+  // margin-top: rem(20);
+  @include pc {
+    padding: 0 rem(50);
+  }
+  @include sp {
+    // padding: 0 rem(30);
+  }
 
   $bd_color: #b4b4b4;
-
   &__month {
     width: 100%;
   }
@@ -309,8 +303,13 @@ const nextRef = ref<HTMLElement | null>(null);
 
     .month {
       grid-row: 1 / span 2;
-      font-size: rem(90);
       // font-weight: 700;
+      @include pc {
+        font-size: rem(90);
+      }
+      @include sp {
+        font-size: rem(60);
+      }
     }
 
     .month-label {
@@ -336,23 +335,30 @@ const nextRef = ref<HTMLElement | null>(null);
     padding-bottom: rem(10);
     // background-color: #000;
     &:nth-child(1) {
-      color: #e85151;
+      // color: #e85151;
+      color: var(--c-red);
     }
   }
 
   &__cell {
     // aspect-ratio: 1 / 1;
     // border-radius: 4px;
-    font-size: rem(18);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-block: rem(10);
     position: relative;
+    @include pc {
+      padding-block: rem(10);
+      font-size: rem(18);
+    }
+    @include sp {
+      font-size: rem(16);
+      padding-block: rem(8);
+    }
 
     &:nth-child(7n + 1),
     &:nth-child(1) {
-      color: #e85151;
+      color: var(--c-red);
     }
 
     &:not(&--empty) {
@@ -360,40 +366,57 @@ const nextRef = ref<HTMLElement | null>(null);
       border-bottom: 1px solid $bd_color;
     }
     &__inner {
-      width: 40%;
       aspect-ratio: 1 /1;
-      padding: 10px 0;
       border-radius: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background 0.2s;
+      @include pc {
+        width: 40%;
+      }
+      @include sp {
+        width: 70%;
+      }
       &--empty {
         background-color: transparent;
       }
       &--has-event {
-        background-color: #62e983;
+        background-color: var(--c-green);
         font-weight: 600;
       }
       &--clickable {
         cursor: pointer;
       }
+
+      span {
+        display: block;
+        aspect-ratio: 1 /1;
+      }
     }
   }
 
   .calender-nav {
-    width: rem(50);
-    height: rem(50);
     background-color: #000;
     border-radius: 100%;
     position: absolute;
-    inset-block: 0;
-    top: rem(100);
-    margin: auto;
     z-index: 2;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    @include pc {
+      width: rem(50);
+      height: rem(50);
+      margin: auto;
+      bottom: 0;
+      top: rem(50);
+    }
+    @include sp {
+      width: rem(30);
+      height: rem(30);
+      top: rem(20);
+    }
 
     &.swiper-button-disabled {
       opacity: 0.3;
@@ -403,24 +426,44 @@ const nextRef = ref<HTMLElement | null>(null);
     &::before {
       content: "";
       display: block;
-      width: rem(12);
-      height: rem(12);
+      width: 24%;
+      aspect-ratio: 1 / 1;
       border-top: rem(2) solid #fff;
       border-right: rem(2) solid #fff;
     }
 
     &.prev-button {
-      left: rem(-20);
+      @include pc {
+        left: rem(-20);
+      }
+      @include sp {
+        left: rem(10);
+      }
       &::before {
         transform: rotate(-135deg);
-        margin-left: rem(5);
+        @include pc {
+          margin-left: rem(5);
+        }
+        @include sp {
+          margin-left: rem(3);
+        }
       }
     }
     &.next-button {
-      right: rem(-20);
+      @include pc {
+        right: rem(-20);
+      }
+      @include sp {
+        right: rem(10);
+      }
       &::before {
         transform: rotate(45deg);
-        margin-right: rem(5);
+        @include pc {
+          margin-right: rem(5);
+        }
+        @include sp {
+          margin-right: rem(3);
+        }
       }
     }
   }

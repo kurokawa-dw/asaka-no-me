@@ -25,6 +25,7 @@ export default defineNuxtConfig({
   },
 
   app: {
+    baseURL: "/",
     head: {
       title: "朝霞の目",
       link: [
@@ -39,23 +40,10 @@ export default defineNuxtConfig({
           href: "https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;700&display=swap",
         },
       ],
-      // link: [
-      //   { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      //   {
-      //     rel: "preconnect",
-      //     href: "https://fonts.gstatic.com",
-      //     crossorigin: "",
-      //   },
-      //   {
-      //     rel: "stylesheet",
-      //     href: "https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Zen+Maru+Gothic:wght@400;700&display=swap",
-      //   },
-      // ],
     },
   },
 
   css: [
-    // "the-new-css-reset/css/reset.css", // パッケージのCSSを直接読み込み
     "@/assets/css/var.css", // その上に自分のベース（任意）
     "@/assets/scss/main.scss", // その上に自分のベース（任意）
   ],

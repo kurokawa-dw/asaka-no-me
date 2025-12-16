@@ -1,22 +1,26 @@
 <script setup lang="ts">
 const { $gsap } = useNuxtApp();
+
+const tpRef = ref<HTMLAllCollection | null>(null);
 onMounted(() => {
-  const tp = document.querySelector("#tp");
+  // const tp = document.querySelector("#tp");
+
+  if (!tpRef.value) return;
 
   // 1) 表示したい文字列（ここを書き換え）
   const base =
     "目黒川じゃなくて黒目川だよ | あサカの目  |  イベントカレンダー | 目黒川じゃなくて黒目川だよ | 朝霞の目 |  Asaka-no-me  |  ";
 
   // 2) 2回連結（これで「最後の後ろに最初がいる」状態を作る）
-  tp.textContent = base + base + base + base;
+  tpRef.value!.textContent = base + base + base + base;
 
   // 3) textPathの“見た目上の長さ（px）”を取得
   // getComputedTextLength() は <textPath> でも取れます
-  const total = tp.getComputedTextLength();
+  const total = tpRef.value!.getComputedTextLength();
   const half = total / 2; // 2回連結したので、1周分は半分
 
   $gsap.fromTo(
-    tp,
+    tpRef.value,
     { attr: { startOffset: 0 } },
     {
       attr: { startOffset: -half }, // 左→右/右→左は符号で調整
@@ -33,7 +37,9 @@ onMounted(() => {
     <h1 class="kv__logo">
       <img src="/images/common/logo.svg" alt="朝霞の目" />
     </h1>
-    <h2 class="kv__copy">〜勝手に朝霞のイベントまとめちゃう〜<br />非公式</h2>
+    <h2 class="kv__copy u-ff-maru">
+      〜勝手に朝霞のイベントまとめちゃう〜<br />非公式
+    </h2>
 
     <div class="kv__river">
       <svg id="river-flow" viewBox="0 0 702.65 404.93">
@@ -53,7 +59,12 @@ onMounted(() => {
           style="fill: none; stroke: #000; stroke-linecap: round"
         />
         <text fill="#000" opacity="0.9">
-          <textPath id="tp" href="#flowPath" startOffset="0"></textPath>
+          <textPath
+            ref="tpRef"
+            id="tp"
+            href="#flowPath"
+            startOffset="0"
+          ></textPath>
         </text>
       </svg>
     </div>
@@ -69,35 +80,56 @@ onMounted(() => {
 .kv {
   // aspect-ratio: 1440 / 500;
   // height: 600px;
-  padding: rem(150) 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: rem(40);
   position: relative;
+  @include pc {
+    padding: rem(150) 0;
+  }
+  @include sp {
+    padding: rem(100) 0;
+  }
   &__logo {
-    width: rem(404);
+    @include pc {
+      width: rem(404);
+    }
+    @include sp {
+      width: rem(200);
+    }
   }
 
   &__copy {
-    font-size: rem(14);
     font-weight: 700;
     letter-spacing: 0.15em;
     text-align: center;
-    font-family: "Zen Maru Gothic", sans-serif;
-    // font-family: var(--font-serif-jp);
+    font-size: rem(14);
+    @include pc {
+    }
+    @include sp {
+      // font-size: rem(10);
+    }
   }
 
   &__river {
     // opacity: 0.5;
-    width: rem(880);
     aspect-ratio: 500 / 288;
     position: absolute;
-    right: rem(5);
-    bottom: rem(-100);
     // font-family: "Zen Maru Gothic", sans-serif;
-    font-size: rem(12);
+
+    @include pc {
+      width: rem(500);
+      right: rem(5);
+      bottom: rem(-0);
+      font-size: rem(12);
+    }
+
+    @include sp {
+      width: rem(400);
+      bottom: rem(-90);
+    }
 
     svg {
       path {

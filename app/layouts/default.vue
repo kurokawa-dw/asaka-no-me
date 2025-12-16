@@ -1,7 +1,7 @@
 <template>
   <div id="wrap">
-    <Header />
+    <LayoutsHeader />
     <slot />
-    <Footer />
+    <LayoutsFooter />
   </div>
 </template>

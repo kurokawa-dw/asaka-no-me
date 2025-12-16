@@ -38,30 +38,50 @@ defineProps<{
 @use "sass:math";
 
 .section {
-  width: rem(1024);
-  margin: rem(180) auto 0 auto;
   border: 1px solid #000;
-  border-radius: rem(20);
-  padding: rem(50) rem(30) rem(40);
   position: relative;
+  margin-inline: auto;
+  background-color: #fff;
+
+  @include pc {
+    width: rem($pcBaseW);
+    padding: rem(50) rem(30) rem(40);
+    border-radius: rem(20);
+    margin-top: rem(180);
+  }
+
+  @include sp {
+    width: rem($spBaseW);
+    padding: rem(40) rem(30) rem(40);
+    border-radius: rem(20);
+  }
 }
 
 .label {
   // border: 1px solid #000;
   width: max-content;
   background: #fff;
-  border-radius: rem(100);
   position: absolute;
-  top: rem(-28);
   inset-inline: 0;
   margin: auto;
-  padding: rem(5) rem(20);
-  // font-weight: 700;
   text-align: center;
-  font-size: rem(14);
+  @include pc {
+    font-size: rem(14);
+    top: rem(-28);
+    padding: rem(5) rem(20);
+  }
+  @include sp {
+    top: rem(-25);
+    padding: rem(10) rem(15);
+  }
   img {
-    width: rem(343);
     display: block;
+    @include pc {
+      width: rem(343);
+    }
+    @include sp {
+      width: rem(200);
+    }
   }
 }
 
@@ -70,7 +90,12 @@ defineProps<{
   text-align: center;
 
   .no-event-text {
-    font-size: rem(18);
+    @include pc {
+      font-size: rem(18);
+    }
+    @include sp {
+      font-size: rem(16);
+    }
   }
 }
 </style>

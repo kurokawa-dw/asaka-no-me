@@ -7,173 +7,179 @@
 ////////////////////////////////////////////////////////////
 
 .u-bold {
-	@extend %u-bold;
+  @extend %u-bold;
 }
 
 .u-mid {
-	@extend %u-mid;
+  @extend %u-mid;
 }
 
 .u-hidden {
-	@extend %u-hidden;
+  @extend %u-hidden;
 }
 
 .u-no-click {
-	@extend %u-no-click;
+  @extend %u-no-click;
 }
 
 .u-base-fit {
-	@extend %u-base-fit;
+  @extend %u-base-fit;
 }
 
 .u-color-red {
-	@extend %u-color-red;
+  @extend %u-color-red;
+}
+
+.u-ff-maru {
+  @extend %u-ff-maru;
 }
 
 
 
 .u-shadow {
-	@extend %u-shadow;
+  @extend %u-shadow;
 }
 
 .is-pc {
-	.u-sp-tellink {
-		@extend %u-sp-tellink;
-	}
+  .u-sp-tellink {
+    @extend %u-sp-tellink;
+  }
 }
 
 .u-align-center {
-	@extend %u-align-center;
+  @extend %u-align-center;
 }
 
 .u-underline {
-	@extend %u-underline;
+  @extend %u-underline;
 }
 
 .u-link-underline {
-	@extend %u-link-underline;
+  @extend %u-link-underline;
 }
 
 .u-hv-underline {
-	@extend %u-hv-underline;
+  @extend %u-hv-underline;
 }
+
+
 
 ////////////////////////////////////////////////////////////
 // img
 ////////////////////////////////////////////////////////////
 .u-img-100 {
-	@extend %u-img-100;
+  @extend %u-img-100;
 }
 
 .u-img-cover {
-	@extend %u-img-cover;
+  @extend %u-img-cover;
 }
 
 ////////////////////////////////////////////////////////////
 // layout
 ////////////////////////////////////////////////////////////
 .u-l-flex {
-	@extend %u-l-flex;
+  @extend %u-l-flex;
 
-	&.--spbet {
-		justify-content: space-between;
-	}
+  &.--spbet {
+    justify-content: space-between;
+  }
 }
 
 .u-l-flex-pc {
-	@extend %u-l-flex-pc;
+  @extend %u-l-flex-pc;
 }
 
 .u-l-flex-sp {
-	@extend %u-l-flex-sp;
+  @extend %u-l-flex-sp;
 }
 
 .u-l-inner-wrap {
-	@extend %u-l-inner-wrap;
+  @extend %u-l-inner-wrap;
 }
 
 ////////////////////////////////////////////////////////////
 // margin .u-mt-1~.u-mt-50 em
 ////////////////////////////////////////////////////////////
 .u-mt-05 {
-	@extend %u-mt-05;
+  @extend %u-mt-05;
 }
 
 .u-mb-05 {
-	@extend %u-mb-05;
+  @extend %u-mb-05;
 }
 
 .u-ml-05 {
-	@extend %u-ml-05;
+  @extend %u-ml-05;
 }
 
 .u-mr-05 {
-	@extend %u-mr-05;
+  @extend %u-mr-05;
 }
 
 @for $i from 1 through 50 {
-	.u-mt-#{$i} {
-		margin-top: $i * 1em;
-	}
+  .u-mt-#{$i} {
+    margin-top: $i * 1em;
+  }
 }
 
 @for $i from 1 through 50 {
-	.u-mb-#{$i} {
-		margin-bottom: $i * 1em;
-	}
+  .u-mb-#{$i} {
+    margin-bottom: $i * 1em;
+  }
 }
 
 @for $i from 1 through 50 {
-	.u-ml-#{$i} {
-		margin-left: $i * 1em;
-	}
+  .u-ml-#{$i} {
+    margin-left: $i * 1em;
+  }
 }
 
 @for $i from 1 through 50 {
-	.u-mr-#{$i} {
-		margin-right: $i * 1em;
-	}
+  .u-mr-#{$i} {
+    margin-right: $i * 1em;
+  }
 }
 
 ////////////////////////////////////////////////////////////
 // padding .u-mt-1~.u-mt-50 em
 ////////////////////////////////////////////////////////////
 .u-pt-05 {
-	@extend %u-pt-05;
+  @extend %u-pt-05;
 }
 
 .u-pb-05 {
-	@extend %u-pb-05;
+  @extend %u-pb-05;
 }
 
 .u-pl-05 {
-	@extend %u-pl-05;
+  @extend %u-pl-05;
 }
 
 .u-pr-05 {
-	@extend %u-pr-05;
+  @extend %u-pr-05;
 }
 
 @for $i from 1 through 50 {
-	.u-pt-#{$i} {
-		padding-top: $i * 1em;
-	}
+  .u-pt-#{$i} {
+    padding-top: $i * 1em;
+  }
 }
 
 @for $i from 1 through 50 {
-	.u-pb-#{$i} {
-		padding-bottom: $i * 1em;
-	}
+  .u-pb-#{$i} {
+    padding-bottom: $i * 1em;
+  }
 }
 
 @for $i from 1 through 50 {
-	.u-pl-#{$i} {
-		padding-left: $i * 1em;
-	}
+  .u-pl-#{$i} {
+    padding-left: $i * 1em;
+  }
 }
 
 @for $i from 1 through 50 {
-	.u-pr-#{$i} {
-		padding-right: $i * 1em;
-	}
+  .u-pr-#{$i} {
+    padding-right: $i * 1em;
+  }
 }

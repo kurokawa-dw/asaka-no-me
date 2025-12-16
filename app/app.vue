@@ -18,7 +18,7 @@
   }
 
   @include sp {
-    padding: rem(20);
+    // padding: rem(20);
   }
 }
 </style>
