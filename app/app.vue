@@ -32,7 +32,7 @@ const isTopPage = computed(() => {
   }
 
   &.is-top-page {
-    padding: 0;
+    padding-top: 0;
   }
 }
 </style>

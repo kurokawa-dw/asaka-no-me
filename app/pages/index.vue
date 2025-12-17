@@ -156,7 +156,7 @@ watch(
 </script>
 
 <template>
-  <main class="l-main">
+  <div>
     <PagesTopKv />
 
     <PagesTopTodayEvent :today-events="todayEvents" />
@@ -178,7 +178,7 @@ watch(
       :format-display-date="formatDisplayDate"
       @set-day-ref="({ date, el }) => setDayRef(date, el)"
     />
-  </main>
+  </div>
 </template>
 
 <style scoped lang="scss">

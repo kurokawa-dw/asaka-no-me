@@ -5,12 +5,12 @@ const year = String(new Date().getUTCFullYear());
 </script>
 
 <template>
-  <footer class="footer">
+  <div class="footer">
     <p class="copyright">
       <span class="copy">&copy;</span>
       <ClientOnly :fallback="year"><YearNow /></ClientOnly> asaka-no-me
     </p>
-  </footer>
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 const { $ScrollTrigger } = useNuxtApp();
 const route = useRoute();
-const logoRef = ref(null);
 
-const eventScrollTrigger = (el: HTMLElement, triggerEl: HTMLElement) => {
+const eventScrollTrigger = (triggerEl: HTMLElement) => {
   $ScrollTrigger.create({
     trigger: triggerEl,
     start: "top 20%",
@@ -29,19 +28,18 @@ watch(
       '[data-trigger="todayEvent"]'
     );
 
-    if (!triggerEl || !logoRef.value) return;
+    if (!triggerEl) return;
 
-    eventScrollTrigger(logoRef.value, triggerEl);
+    eventScrollTrigger(triggerEl);
   },
   { immediate: true }
 );
 </script>
 
 <template>
-  <header class="l-header">
+  <div class="header">
     <p
-      ref="logoRef"
-      class="l-header__logo"
+      class="header__logo"
       :class="{ 'is-lower': !isTopPage, 'is-active': logoView }"
     >
       <NuxtLink to="/"
@@ -49,8 +47,10 @@ watch(
       /></NuxtLink>
     </p>
 
-    <button class="l-header__hum-btn"><span v-for="el in 3"></span></button>
-  </header>
+    <button class="header__hum-btn"><span v-for="el in 3"></span></button>
+
+    <nav class></nav>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -59,7 +59,7 @@ watch(
 @use "@/assets/scss/component/utiltyPlaceholders";
 @use "sass:math";
 
-.l-header {
+.header {
   &__logo {
     position: fixed;
     z-index: 10;
@@ -83,6 +83,7 @@ watch(
 
     &.is-active {
       transform: translateY(0);
+      transition: transform 1s $easeOutQuart;
     }
   }
 

@@ -2,149 +2,149 @@
 
 // レスポンシブ
 @mixin pc {
-	@media screen and ($breakpoint < width) {
-		@content;
-	}
+  @media screen and ($breakpoint < width) {
+    @content;
+  }
 }
 
 // @media only screen and (max-width: $breakpointPc) and (min-width: ($breakpoint + 1)) {
 @mixin tab {
-	@media screen and ($breakpoint < width) and (width <=$breakpointPc) {
-		@content;
-	}
+  @media screen and ($breakpoint < width) and (width <=$breakpointPc) {
+    @content;
+  }
 }
 
 @mixin sp {
-	@media screen and (width <=$breakpoint) {
-		@content;
-	}
+  @media screen and (width <=$breakpoint) {
+    @content;
+  }
 }
 
 // vw
 //////////////////////////////////////////////////////////////
 // width: vw(386);
 @function vw($size, $viewport: $vwViewPort) {
-	$rate: calc(100 / $viewport);
-	@return $rate * $size * 1vw;
+  $rate: calc(100 / $viewport);
+  @return $rate * $size * 1vw;
 }
 
 @function vwTab($size, $viewport: $vwViewPortTab) {
-	$rate: calc(100 / $viewport);
-	@return $rate * $size * 1vw;
+  $rate: calc(100 / $viewport);
+  @return $rate * $size * 1vw;
 }
 
 @function vwPc($size, $viewport: $artbordW_PC) {
-	$rate: calc(100 / $viewport);
-	@return $rate * $size * 1vw;
+  $rate: calc(100 / $viewport);
+  @return $rate * $size * 1vw;
 }
 
 @function vhPc($size, $viewport: 640) {
-	$rate: calc(100 / $viewport);
-	@return $rate * $size * 1vh;
+  $rate: calc(100 / $viewport);
+  @return $rate * $size * 1vh;
 }
 
 // rem (レスポンシブ)
 //////////////////////////////////////////////////////////////
-// width: vw(386);
+// width: rem(386);
 @function rem($size) {
-	@return $size * 0.1 * 1rem;
+  @return $size * 0.1 * 1rem;
 }
 
 // pcMin pcMax
 ////////////////////////////////////////////////////////////
 @function pcMin($size) {
-	@return min(vwPc($size), $size * 1px);
+  @return min(vwPc($size), $size * 1px);
 }
 
 @function pcMax($size) {
-	@return max(vwPc($size), $size * 1px);
+  @return max(vwPc($size), $size * 1px);
 }
 
 // spMin spMax
 ////////////////////////////////////////////////////////////
 @function spMin($size) {
-	@return min(vw($size), $size * 1.5px);
+  @return min(vw($size), $size * 1.5px);
 }
 
 @function spMax($size) {
-	@return max(vw($size), $size * 1.5px);
+  @return max(vw($size), $size * 1.5px);
 }
 
 // pcSize
 ////////////////////////////////////////////////////////////
 @function pcSize($size) {
-	@return $size * calc($vwViewPortPc / $vwViewPort) * 1px;
+  @return $size * calc($vwViewPortPc / $vwViewPort) * 1px;
 }
 
 // artbordVW
 ////////////////////////////////////////////////////////////
 @function artbordVW($size, $viewport: $artbordW_PC) {
-	$rate: calc(100 / $viewport);
-	@return $rate * $size * 1vw;
+  $rate: calc(100 / $viewport);
+  @return $rate * $size * 1vw;
 }
 
 // percentage
 ////////////////////////////////////////////////////////////
 @function percent($a, $b) {
-	$result: calc($a / $b) * 100%;
-	@return $result;
+  $result: calc($a / $b) * 100%;
+  @return $result;
 }
 
 // flex
 //////////////////////////////////////////////////////////////
 // @include flex(space-between, center);
 @mixin flex($justify: space-between, $align: stretch, $wrap: wrap, $flex: flex) {
-	// display: -webkit-flex;/
-	display: $flex;
-	justify-content: $justify;
-	align-items: $align;
-	flex-wrap: $wrap;
+  // display: -webkit-flex;/
+  display: $flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
 }
 
 // margin-center
 //////////////////////////////////////////////////////////////
 @mixin marCenter() {
-	margin-left: auto;
-	margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @mixin posiCenter() {
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
 
 // font-smooth
 //////////////////////////////////////////////////////////////
 @mixin fSmooth() {
-	-webkit-font-smoothing: subpixel-antialiased;
-	-moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
 }
 
 // w100 h100
 //////////////////////////////////////////////////////////////
 @mixin box100() {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 // blueGrad
 //////////////////////////////////////////////////////////////
 @mixin blueGradX() {
-	background: linear-gradient(to right, rgba(16, 84, 173, 1) 0%, rgba(40, 114, 211, 1) 100%);
+  background: linear-gradient(to right, rgba(16, 84, 173, 1) 0%, rgba(40, 114, 211, 1) 100%);
 }
 
 @mixin blueGradXrevers() {
-	background: linear-gradient(to right, rgba(40, 114, 211, 1) 0%, rgba(16, 84, 173, 1) 100%);
+  background: linear-gradient(to right, rgba(40, 114, 211, 1) 0%, rgba(16, 84, 173, 1) 100%);
 }
 
 @mixin blueGradY() {
-	background: linear-gradient(to bottom, rgba(16, 84, 173, 1) 0%, rgba(40, 114, 211, 1) 100%);
+  background: linear-gradient(to bottom, rgba(16, 84, 173, 1) 0%, rgba(40, 114, 211, 1) 100%);
 }
 
 @mixin blueGradYrevers() {
-	background: linear-gradient(to bottom, rgba(40, 114, 211, 1) 0%, rgba(16, 84, 173, 1) 100%);
+  background: linear-gradient(to bottom, rgba(40, 114, 211, 1) 0%, rgba(16, 84, 173, 1) 100%);
 }
