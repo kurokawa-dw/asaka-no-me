@@ -15,6 +15,6 @@ export default defineNuxtPlugin(async () => {
     MotionPathPlugin
   );
   return {
-    provide: { gsap },
+    provide: { gsap, ScrollTrigger },
   };
 });

@@ -7,10 +7,15 @@ type EventItem = {
 defineProps<{
   todayEvents: EventItem[];
 }>();
+
+const mount = useMountStore();
+
+onMounted(() => mount.setMounted("todayEvent", true));
+onBeforeUnmount(() => mount.setMounted("todayEvent", false));
 </script>
 
 <template>
-  <section class="section">
+  <section class="section" data-trigger="todayEvent">
     <p class="label">
       <img src="/images/top/ttl-label-today-event.svg" alt="今日のイベント" />
     </p>

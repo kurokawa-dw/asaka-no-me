@@ -20,7 +20,7 @@ const emit = defineEmits<{
 const onDateClick = (cell: CalendarCell) => {
   if (!cell.dateStr || !cell.hasEvents) return;
 
-  console.log(cell);
+  // console.log(cell);
   emit("date-click", cell.dateStr); // 'YYYY-MM-DD'
 };
 

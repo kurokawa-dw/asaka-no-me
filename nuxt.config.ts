@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     // "@nuxtjs/google-fonts",
     "@nuxt/content",
     "@nuxtjs/tailwindcss",
+    "@pinia/nuxt",
   ],
 
   nitro: {

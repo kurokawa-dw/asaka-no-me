@@ -24,7 +24,7 @@ const year = String(new Date().getUTCFullYear());
   align-items: center;
   justify-content: center;
   @include pc {
-    height: 80px;
+    height: rem(80);
   }
 
   @include sp {

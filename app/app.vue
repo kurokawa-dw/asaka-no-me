@@ -1,6 +1,13 @@
+<script setup lang="ts">
+const route = useRoute();
+const isTopPage = computed(() => {
+  return route.path === "/";
+});
+</script>
+
 <template>
   <NuxtLayout>
-    <div class="page-contents">
+    <div class="page-contents" :class="isTopPage && 'is-top-page'">
       <NuxtPage />
     </div>
   </NuxtLayout>
@@ -13,12 +20,19 @@
 @use "sass:math";
 .page-contents {
   @include pc {
-    // width: rem(1280);
-    // margin: rem(100) auto 0;
+    padding-top: rem(100);
+    padding-bottom: rem(100);
+    min-height: calc(100vh - rem(80));
   }
 
   @include sp {
-    // padding: rem(20);
+    padding-top: rem(100);
+    padding-bottom: rem(100);
+    min-height: calc(100vh - rem(50));
+  }
+
+  &.is-top-page {
+    padding: 0;
   }
 }
 </style>
