@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div></div>
+  <div>問い合わせページ</div>
 </template>
 
 <style scoped lang="scss">
