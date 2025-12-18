@@ -169,11 +169,12 @@ onMounted(() => {
       margin-bottom: rem(4 * 10);
       img {
         display: block;
-        width: fit-content;
-        max-width: 100%;
-        min-width: 80%;
+        width: max-content;
+        // max-width: 100%;
+        // min-width: 80%;
         margin-inline: auto;
-        border-radius: rem(20);
+        // border-radius: rem(20);
+        max-height: rem(500);
 
         &.is-portrait {
           // min-width: auto;
