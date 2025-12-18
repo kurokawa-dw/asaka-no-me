@@ -99,14 +99,21 @@ onMounted(() => {
   <article v-if="eventDoc" class="event-detail">
     <header class="event-detail__hero">
       <div v-if="eventDoc.meta?.heroImage" class="event-detail__hero__image">
-        <img
-          ref="imgRef"
-          :src="eventDoc.meta.heroImage"
-          :alt="eventDoc.title"
-          :class="{ 'is-portrait': imgPortrait }"
-          @load="onLoad"
-          @error="onError"
-        />
+        <div class="inner">
+          <img
+            ref="imgRef"
+            :src="eventDoc.meta.heroImage"
+            :alt="eventDoc.title"
+            :class="{ 'is-portrait': imgPortrait }"
+            @load="onLoad"
+            @error="onError"
+          />
+        </div>
+      </div>
+      <div v-else class="event-detail__hero__image fallback">
+        <div class="inner">
+          <img src="/images/event/event-fallback-img.jpg" alt="あさかの目" />
+        </div>
       </div>
 
       <div class="event-detail__hero__text">
@@ -167,18 +174,50 @@ onMounted(() => {
     &__image {
       width: 100%;
       margin-bottom: rem(4 * 10);
+      position: relative;
+      border: 1px solid #000;
+      border-radius: rem(25);
+      padding: rem(10);
+
+      .inner {
+        position: relative;
+        border-radius: rem(15);
+        overflow: hidden;
+      }
       img {
         display: block;
         width: max-content;
         // max-width: 100%;
         // min-width: 80%;
         margin-inline: auto;
-        // border-radius: rem(20);
+        border-radius: rem(20);
         max-height: rem(500);
 
         &.is-portrait {
           // min-width: auto;
           // max-height: rem(500);
+        }
+      }
+
+      &.fallback {
+        .inner {
+          aspect-ratio: 1024 / 300;
+          &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            // background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(20px);
+          }
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
         }
       }
     }
