@@ -13,7 +13,7 @@ const navData = [
     path: "/",
   },
   {
-    label: "朝霞の目につてい",
+    label: "朝霞の目について",
     path: "/about",
   },
   {
@@ -65,9 +65,15 @@ const navData = [
     }
     a {
       display: block;
-      padding: rem(20) rem(50);
       font-weight: 700;
-      font-size: rem(18);
+      @include pc {
+        padding: rem(20) rem(50);
+        font-size: rem(18);
+      }
+      @include sp {
+        padding: rem(15) rem(10);
+        font-size: rem(16);
+      }
     }
   }
 }
