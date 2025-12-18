@@ -11,12 +11,8 @@ export default defineNuxtConfig({
     port: 3000,
     // https: { key: 'path/to/key.pem', cert: 'path/to/cert.pem' } // HTTPSにしたい場合
   },
-  modules: [
-    // "@nuxtjs/google-fonts",
-    "@nuxt/content",
-    "@nuxtjs/tailwindcss",
-    "@pinia/nuxt",
-  ],
+  modules: [// "@nuxtjs/google-fonts",
+  "@nuxt/content", "@nuxtjs/tailwindcss", "@pinia/nuxt", "nuxt-svgo"],
 
   nitro: {
     prerender: {
