@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Logo from "~/assets/img/logo.svg";
 const { $ScrollTrigger } = useNuxtApp();
 const route = useRoute();
 
@@ -60,9 +61,7 @@ const closeNav = () => {
       class="header__logo"
       :class="{ 'is-lower': !isTopPage, 'is-active': logoView || navOp }"
     >
-      <NuxtLink to="/" @click="closeNav"
-        ><img src="/images/common/logo.svg" alt="朝霞の目"
-      /></NuxtLink>
+      <NuxtLink to="/" @click="closeNav"><Logo /></NuxtLink>
     </p>
 
     <button
@@ -89,20 +88,23 @@ const closeNav = () => {
 
 .header {
   &__logo {
+    background-color: #000;
+    mix-blend-mode: exclusion;
     position: fixed;
     z-index: 100;
     transition: transform 0.5s $easeOutQuart;
+    transform: translateY(-250%);
+    aspect-ratio: 375 / 85;
 
     @include pc {
       width: rem(120);
       top: rem(30);
       left: rem(30);
-      transform: translateY(-200%);
     }
 
     @include sp {
       width: rem(80);
-      top: rem(15);
+      top: rem(18);
       left: rem(15);
     }
     &.is-lower {
@@ -111,11 +113,24 @@ const closeNav = () => {
 
     &.is-active {
       transform: translateY(0);
-      transition: transform 1s $easeOutQuart;
+      transition: transform 1.2s $easeOutQuart;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      margin-bottom: 0;
+      fill: #fff;
+      * {
+        fill: #fff;
+      }
     }
   }
 
   &__hum-btn {
+    background-color: #000;
+    mix-blend-mode: exclusion;
     display: block;
     position: fixed;
     z-index: 100;
@@ -137,7 +152,7 @@ const closeNav = () => {
       display: block;
       width: 100%;
       height: rem(1);
-      background-color: #000;
+      background-color: #fff;
       position: absolute;
       margin: auto;
       transition: transform 0.5s;
