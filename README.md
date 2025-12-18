@@ -85,3 +85,7 @@ node_modules/.cache/nuxt-google-fonts を削除すること
 node -v
 v24.2.0
 ```
+
+## ダミー画像
+
+https://picsum.photos/
