@@ -86,10 +86,10 @@ img {
 }
 
 .is-nav-op {
-  @include sp {
-    overflow: hidden;
-    --base-fc: #fff;
-  }
+  overflow: hidden;
+  // @include sp {
+  //   --base-fc: #fff;
+  // }
 }
 
 .dark-mode {

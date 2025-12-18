@@ -34,22 +34,52 @@ watch(
   },
   { immediate: true }
 );
+
+const navOp = ref(false);
+
+const navToggle = () => {
+  navOp.value = !navOp.value;
+
+  const body = document.body;
+  if (navOp.value) {
+    body.classList.add("is-nav-op");
+  } else {
+    body.classList.remove("is-nav-op");
+  }
+};
+
+const closeNav = () => {
+  navOp.value = false;
+
+  const body = document.body;
+  body.classList.remove("is-nav-op");
+};
 </script>
 
 <template>
   <div class="header">
     <p
       class="header__logo"
-      :class="{ 'is-lower': !isTopPage, 'is-active': logoView }"
+      :class="{ 'is-lower': !isTopPage, 'is-active': logoView || navOp }"
     >
-      <NuxtLink to="/"
+      <NuxtLink to="/" @click="closeNav"
         ><img src="/images/common/logo.svg" alt="朝霞の目"
       /></NuxtLink>
     </p>
 
-    <button class="header__hum-btn"><span v-for="el in 3"></span></button>
+    <button
+      class="header__hum-btn"
+      :class="{ 'is-nav-op': navOp }"
+      @click="navToggle"
+    >
+      <span v-for="el in 3"></span>
+    </button>
 
-    <nav class></nav>
+    <LayoutsNav
+      class="l-nav"
+      :class="{ 'is-nav-op': navOp }"
+      :onClose="closeNav"
+    />
   </div>
 </template>
 
@@ -62,7 +92,7 @@ watch(
 .header {
   &__logo {
     position: fixed;
-    z-index: 10;
+    z-index: 100;
     transition: transform 0.5s $easeOutQuart;
 
     @include pc {
@@ -99,8 +129,8 @@ watch(
       top: rem(30);
     }
     @include sp {
-      width: rem(20);
-      height: rem(15);
+      width: rem(25);
+      height: rem(20);
       right: rem(20);
       top: rem(20);
     }
@@ -112,6 +142,7 @@ watch(
       background-color: #000;
       position: absolute;
       margin: auto;
+      transition: transform 0.5s;
       &:nth-child(1) {
         top: 0;
       }
@@ -123,6 +154,33 @@ watch(
         bottom: 0;
       }
     }
+
+    &.is-nav-op {
+      span {
+        &:nth-child(1) {
+          bottom: 0;
+          transform: rotate(135deg);
+        }
+        &:nth-child(2) {
+          opacity: 0;
+        }
+        &:nth-child(3) {
+          top: 0;
+          transform: rotate(-135deg);
+        }
+      }
+    }
+  }
+}
+
+.l-nav {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+
+  &.is-nav-op {
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 </style>
