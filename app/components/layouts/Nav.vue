@@ -1,6 +1,10 @@
 <script setup lang="ts">
-const props = defineProps<{
-  onClose: () => void;
+// const props = defineProps<{
+//   onClose: () => void;
+// }>();
+
+const emit = defineEmits<{
+  (e: "close"): void;
 }>();
 
 const navData = [
@@ -23,7 +27,9 @@ const navData = [
   <div class="nav">
     <ul class="nav__list">
       <li v-for="data in navData" :key="data.path">
-        <NuxtLink :to="data.path" @click="onClose">{{ data.label }}</NuxtLink>
+        <NuxtLink :to="data.path" @click="emit('close')">{{
+          data.label
+        }}</NuxtLink>
       </li>
     </ul>
   </div>
@@ -50,10 +56,18 @@ const navData = [
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    // gap: 1em;
+    li {
+      border-top: 1px solid #aaa;
+      &:last-child {
+        border-bottom: 1px solid #aaa;
+      }
+    }
     a {
+      display: block;
+      padding: rem(20) rem(50);
       font-weight: 700;
-      font-size: rem(20);
+      font-size: rem(18);
     }
   }
 }

@@ -40,19 +40,17 @@ const navOp = ref(false);
 const navToggle = () => {
   navOp.value = !navOp.value;
 
-  const body = document.body;
   if (navOp.value) {
-    body.classList.add("is-nav-op");
+    document.body.classList.add("is-nav-op");
   } else {
-    body.classList.remove("is-nav-op");
+    document.body.classList.remove("is-nav-op");
   }
 };
 
 const closeNav = () => {
   navOp.value = false;
 
-  const body = document.body;
-  body.classList.remove("is-nav-op");
+  document.body.classList.remove("is-nav-op");
 };
 </script>
 
@@ -78,7 +76,7 @@ const closeNav = () => {
     <LayoutsNav
       class="l-nav"
       :class="{ 'is-nav-op': navOp }"
-      :onClose="closeNav"
+      @close="closeNav"
     />
   </div>
 </template>

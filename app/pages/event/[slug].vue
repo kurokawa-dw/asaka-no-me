@@ -62,17 +62,55 @@ const formatDisplayDate = (dateStr: string) => {
   const w = ["日", "月", "火", "水", "木", "金", "土"][d.getDay()];
   return `${m}/${day}（${w}）`;
 };
+
+const imgRef = ref<HTMLImageElement | null>(null);
+const imgPortrait = ref(false);
+
+const readSize = () => {
+  const img = imgRef.value;
+  if (!img) return;
+  console.log(img.naturalWidth, img.naturalHeight);
+  if (img.naturalWidth < img.naturalHeight) {
+    imgPortrait.value = true;
+  }
+};
+
+const onLoad = () => {
+  readSize();
+};
+
+const onError = () => {
+  console.warn("image load error");
+};
+
+onMounted(() => {
+  const img = imgRef.value;
+  if (!img) return;
+
+  // すでに読み込み済み（キャッシュ等）だと @load を取り逃すことがある
+  // ただし complete=true でも失敗してる可能性があるので naturalWidth も見るのが安全
+  if (img.complete && img.naturalWidth > 0) {
+    readSize();
+  }
+});
 </script>
 
 <template>
   <article v-if="eventDoc" class="event-detail">
     <header class="event-detail__hero">
-      <div v-if="eventDoc.meta?.heroImage" class="event-detail__hero-image">
-        <img :src="eventDoc.meta.heroImage" :alt="eventDoc.title" />
+      <div v-if="eventDoc.meta?.heroImage" class="event-detail__hero__image">
+        <img
+          ref="imgRef"
+          :src="eventDoc.meta.heroImage"
+          :alt="eventDoc.title"
+          :class="{ 'is-portrait': imgPortrait }"
+          @load="onLoad"
+          @error="onError"
+        />
       </div>
 
-      <div class="event-detail__hero-text">
-        <p class="event-detail__label">イベント情報</p>
+      <div class="event-detail__hero__text">
+        <!-- <p class="event-detail__label">イベント情報</p> -->
 
         <h1 class="event-detail__title">
           {{ eventDoc.title }}
@@ -118,4 +156,52 @@ const formatDisplayDate = (dateStr: string) => {
 @use "@/assets/scss/mixin/" as *;
 @use "@/assets/scss/component/utiltyPlaceholders";
 @use "sass:math";
+
+.event-detail {
+  margin-inline: auto;
+  @include pc {
+    width: rem($pcBaseW);
+  }
+
+  &__hero {
+    &__image {
+      width: 100%;
+      margin-bottom: rem(4 * 10);
+      img {
+        display: block;
+        width: fit-content;
+        max-width: 100%;
+        min-width: 80%;
+        margin-inline: auto;
+        border-radius: rem(20);
+
+        &.is-portrait {
+          // min-width: auto;
+          // max-height: rem(500);
+        }
+      }
+    }
+
+    &__text {
+      @include sp {
+        padding: 0 rem(20);
+      }
+    }
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: rem(4 * 7);
+  }
+  &__subtitle {
+    font-weight: 700;
+  }
+
+  &__section {
+    margin-top: rem(100);
+    @include sp {
+      padding: 0 rem(20);
+    }
+  }
+}
 </style>

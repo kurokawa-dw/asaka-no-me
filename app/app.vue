@@ -26,7 +26,7 @@ const isTopPage = computed(() => {
   }
 
   @include sp {
-    padding-top: rem(100);
+    padding-top: rem(60);
     padding-bottom: rem(100);
     min-height: calc(100vh - rem(50));
   }

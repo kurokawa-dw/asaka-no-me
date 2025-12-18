@@ -23,7 +23,7 @@ officialUrl: https://example.com/event-a
 organizer: ○○商店街振興組合
 contact: info@example.com
 
-heroImage: /images/events/event-a/hero.jpg
+heroImage: https://picsum.photos/500/300
 summary: >
   ○○商店街を巡ってスタンプを集めるスタンプラリーです。期間中に対象店舗でお買い物するとスタンプがもらえます。
 ---
