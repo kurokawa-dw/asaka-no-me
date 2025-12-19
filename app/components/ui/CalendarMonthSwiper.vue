@@ -158,16 +158,22 @@ onMounted(() => {
 
 const prevRef = ref<HTMLElement | null>(null);
 const nextRef = ref<HTMLElement | null>(null);
+
+const shown = ref(false);
+
+const onClientMounted = async () => {
+  shown.value = false;
+  await nextTick();
+  requestAnimationFrame(() => {
+    shown.value = true;
+  });
+};
 </script>
 
 <template>
-  <!-- Swiper は client-only で動かしたいので、Nuxt の ClientOnly で包むと安全 -->
-  <ClientOnly>
-    <div class="calender-section">
-      <!-- <p class="label">
-        <img src="/images/top/ttl-label-calener.svg" alt="カレンダー" />
-      </p> -->
-      <div class="calendar-swiper">
+  <div class="calender-section">
+    <ClientOnly @vue:mounted="onClientMounted">
+      <div class="calendar-swiper" :class="{ 'is-shown': shown }">
         <Swiper
           :slides-per-view="1"
           :centered-slides="true"
@@ -237,8 +243,8 @@ const nextRef = ref<HTMLElement | null>(null);
           class="calender-nav next-button"
         ></button>
       </div>
-    </div>
-  </ClientOnly>
+    </ClientOnly>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -254,29 +260,27 @@ const nextRef = ref<HTMLElement | null>(null);
   @include pc {
     width: rem($pcBaseW);
     margin-top: rem(50);
+    aspect-ratio: 1024 / 587;
   }
 
   @include sp {
     width: rem($spBaseW);
     margin-top: rem(30);
+    aspect-ratio: 350 / 420;
   }
 }
 
-// .label {
-//   width: max-content;
-//   margin-inline: auto;
-//   img {
-//     width: rem(120);
-//   }
-// }
-
 .calendar-swiper {
-  // margin-top: rem(20);
+  opacity: 0;
+  transition: opacity 0.3s;
   @include pc {
     padding: 0 rem(50);
   }
   @include sp {
     // padding: 0 rem(30);
+  }
+  &.is-shown {
+    opacity: 1;
   }
 
   $bd_color: #b4b4b4;
@@ -290,7 +294,6 @@ const nextRef = ref<HTMLElement | null>(null);
   }
 
   &__title {
-    // font-size: 24px;
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: 1fr 1fr;
@@ -333,16 +336,12 @@ const nextRef = ref<HTMLElement | null>(null);
     text-align: center;
     font-size: 12px;
     padding-bottom: rem(10);
-    // background-color: #000;
     &:nth-child(1) {
-      // color: #e85151;
       color: var(--c-red);
     }
   }
 
   &__cell {
-    // aspect-ratio: 1 / 1;
-    // border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;

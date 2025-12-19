@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// イベントがない表示させたい場合は filteredListByDate
+// イベントがある日のみを表示する場合は activeDay
+
 type EventItem = {
   slug: string;
   title: string;
@@ -35,9 +38,6 @@ const year = computed(() => {
 const month = computed(() => {
   return props.filteredListByDate[0]?.date.split("-")[1];
 });
-
-// イベントがない表示させたい場合は filteredListByDate
-// イベントがある日のみを表示する場合は activeDay
 
 const emit = defineEmits<{
   (e: "set-day-ref", payload: { date: string; el: HTMLElement | null }): void;
