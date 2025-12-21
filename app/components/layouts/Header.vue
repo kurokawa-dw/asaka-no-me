@@ -56,7 +56,10 @@ const closeNav = () => {
 </script>
 
 <template>
-  <div class="header">
+  <div
+    class="header"
+    :class="{ 'is-lower': !isTopPage, 'is-active': logoView || navOp }"
+  >
     <p
       class="header__logo"
       :class="{ 'is-lower': !isTopPage, 'is-active': logoView || navOp }"
@@ -71,13 +74,8 @@ const closeNav = () => {
     >
       <span v-for="el in 3"></span>
     </button>
-
-    <LayoutsNav
-      class="l-nav"
-      :class="{ 'is-nav-op': navOp }"
-      @close="closeNav"
-    />
   </div>
+  <LayoutsNav class="l-nav" :class="{ 'is-nav-op': navOp }" @close="closeNav" />
 </template>
 
 <style scoped lang="scss">
@@ -87,25 +85,43 @@ const closeNav = () => {
 @use "sass:math";
 
 .header {
+  width: 100%;
+  background-color: #fff;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 100;
+  @include pc {
+    padding: 0 rem(30);
+    height: rem(80);
+  }
+  @include sp {
+    padding: 0 rem(20);
+    height: rem(50);
+  }
+
+  &.is-lower {
+    border-bottom: 1px solid #ccc;
+  }
+  &.is-active {
+    border-bottom: 1px solid #ccc;
+  }
+
   &__logo {
-    background-color: #000;
-    mix-blend-mode: exclusion;
-    position: fixed;
-    z-index: 100;
     transition: transform 0.5s $easeOutQuart;
     transform: translateY(-250%);
     aspect-ratio: 375 / 85;
 
     @include pc {
       width: rem(120);
-      top: rem(30);
-      left: rem(30);
     }
 
     @include sp {
       width: rem(80);
-      top: rem(18);
-      left: rem(15);
     }
     &.is-lower {
       transform: translateY(0);
@@ -121,38 +137,27 @@ const closeNav = () => {
       height: 100%;
       display: block;
       margin-bottom: 0;
-      fill: #fff;
-      * {
-        fill: #fff;
-      }
     }
   }
 
   &__hum-btn {
-    background-color: #000;
-    mix-blend-mode: exclusion;
     display: block;
-    position: fixed;
-    z-index: 100;
+    position: relative;
     cursor: pointer;
     @include pc {
       width: rem(35);
       height: rem(25);
-      right: rem(30);
-      top: rem(30);
     }
     @include sp {
       width: rem(25);
       height: rem(20);
-      right: rem(20);
-      top: rem(20);
     }
 
     span {
       display: block;
       width: 100%;
       height: rem(1);
-      background-color: #fff;
+      background-color: #000;
       position: absolute;
       margin: auto;
       transition: transform 0.5s;
