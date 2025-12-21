@@ -20,6 +20,7 @@ feeDetail: 参加無料（飲食・お買い物代は別途）
 reservationRequired: false
 
 officialUrl: https://example.com/event-a
+officialUrlLabel: サイト名
 
 organizer: ○○商店街振興組合
 contact: info@example.com

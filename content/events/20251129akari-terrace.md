@@ -19,6 +19,7 @@ fee: 参加費についてのテキスト
 reservation: 予約についてのテキスト
 
 officialUrl: https://www.city.asaka.lg.jp/soshiki/52/asakairumi-2025.html
+officialUrlLabel: 朝霞市公式ホームページ
 
 organizer: 朝霞市
 contact: https://www.city.asaka.lg.jp/soshiki/52/asakairumi-2025.html

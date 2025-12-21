@@ -216,7 +216,7 @@ onMounted(() => {
                   class="u-hv-underline word-break"
                   :href="eventDoc.meta?.officialUrl"
                   target="_blank"
-                  >{{ eventDoc.meta?.officialUrl }}</a
+                  >{{ eventDoc.meta?.officialUrlLabel }}</a
                 >
               </dd>
             </div>
