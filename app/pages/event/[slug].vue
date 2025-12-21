@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import "~/assets/scss/pages/event/style.scss";
+
 const route = useRoute();
 
 const slugFromStem = (stem?: string) => {
@@ -46,6 +48,33 @@ const eventDoc = computed<any | null>(() => {
   return matches[0] ?? null;
 });
 
+const hasBody = computed(() => {
+  const v = eventDoc.value?.body?.value;
+  if (!Array.isArray(v)) return false;
+
+  // 配列要素の中に「実質的に何かある」ものが1つでもあれば true
+  const hasMeaningful = (node: any): boolean => {
+    if (node == null) return false;
+    if (typeof node === "string") return node.trim().length > 0;
+    if (Array.isArray(node)) return node.some(hasMeaningful);
+    if (typeof node === "object") {
+      // 万一 object が混ざってても拾えるように
+      if (typeof node.value === "string" && node.value.trim()) return true;
+      if (Array.isArray((node as any).children))
+        return (node as any).children.some(hasMeaningful);
+    }
+    return false;
+  };
+
+  return v.some(hasMeaningful);
+});
+
+// watchEffect(() => {
+//   if (eventDoc.value) {
+//     console.log("body:", eventDoc.value.body);
+//   }
+// });
+
 // 404
 if (!eventDoc.value) {
   throw createError({
@@ -57,10 +86,11 @@ if (!eventDoc.value) {
 // 日付表示（見た目用）
 const formatDisplayDate = (dateStr: string) => {
   const d = new Date(dateStr);
+  const y = d.getFullYear();
   const m = d.getMonth() + 1;
   const day = d.getDate();
   const w = ["日", "月", "火", "水", "木", "金", "土"][d.getDay()];
-  return `${m}/${day}（${w}）`;
+  return `${y}年 ${m}月${day}日（${w}）`;
 };
 
 const imgRef = ref<HTMLImageElement | null>(null);
@@ -93,69 +123,121 @@ onMounted(() => {
     readSize();
   }
 });
+
+// console.log(eventDoc.value);
+// console.log(eventDoc.value.meta.endDate);
+
+// if (eventDoc.value.meta.startDate === eventDoc.value.meta.endDate) {
+//   console.log("同じ");
+// } else {
+//   console.log("違う");
+// }
 </script>
 
 <template>
-  <article v-if="eventDoc" class="event-detail">
-    <header class="event-detail__hero">
-      <div v-if="eventDoc.meta?.heroImage" class="event-detail__hero__image">
-        <div class="inner">
-          <img
-            ref="imgRef"
-            :src="eventDoc.meta.heroImage"
-            :alt="eventDoc.title"
-            :class="{ 'is-portrait': imgPortrait }"
-            @load="onLoad"
-            @error="onError"
-          />
+  <div class="event-page">
+    <article v-if="eventDoc" class="event-detail">
+      <header class="hero">
+        <div v-if="eventDoc.meta?.heroImage" class="hero__image">
+          <div class="inner">
+            <img
+              ref="imgRef"
+              :src="eventDoc.meta.heroImage"
+              :alt="eventDoc.title"
+              :class="{ 'is-portrait': imgPortrait }"
+              @load="onLoad"
+              @error="onError"
+            />
+          </div>
         </div>
-      </div>
-      <div v-else class="event-detail__hero__image fallback">
-        <div class="inner">
-          <img src="/images/event/event-fallback-img.jpg" alt="あさかの目" />
+        <div v-else class="hero__image fallback">
+          <div class="inner">
+            <img src="/images/event/event-fallback-img.jpg" alt="あさかの目" />
+          </div>
         </div>
-      </div>
 
-      <div class="event-detail__hero__text">
-        <!-- <p class="event-detail__label">イベント情報</p> -->
-
-        <h1 class="event-detail__title">
-          {{ eventDoc.title }}
-        </h1>
-
-        <p v-if="eventDoc.meta?.subtitle" class="event-detail__subtitle">
-          {{ eventDoc.meta.subtitle }}
-        </p>
-
-        <p
-          v-if="eventDoc.meta?.startDate && eventDoc.meta?.endDate"
-          class="event-detail__period"
-        >
-          {{ formatDisplayDate(eventDoc.meta.startDate) }}
-          〜
-          {{ formatDisplayDate(eventDoc.meta.endDate) }}
-        </p>
-
-        <p v-if="eventDoc.meta?.openingTime" class="event-detail__time">
-          開催時間：{{ eventDoc.meta.openingTime }}
-        </p>
-
-        <ul v-if="eventDoc.meta?.tags?.length" class="event-detail__tags">
+        <ul v-if="eventDoc.meta?.tags?.length" class="hero__tags">
           <li v-for="tag in eventDoc.meta.tags" :key="tag">#{{ tag }}</li>
         </ul>
-      </div>
-    </header>
 
-    <section class="event-detail__section">
-      <h2>概要</h2>
-      <p v-if="eventDoc.meta?.summary">{{ eventDoc.meta.summary }}</p>
-    </section>
+        <div class="hero__text">
+          <h1 class="hero__title">
+            {{ eventDoc.title }}
+          </h1>
 
-    <section class="event-detail__section">
-      <h2>詳細</h2>
-      <ContentRenderer :value="eventDoc" />
-    </section>
-  </article>
+          <!-- <p v-if="eventDoc.meta?.subtitle" class="event-detail__subtitle">
+            {{ eventDoc.meta.subtitle }}
+          </p> -->
+          <dl class="hero__data">
+            <div v-if="eventDoc.meta?.startDate" class="hero__data__item date">
+              <dt>🕒日時</dt>
+              <dd>
+                <p class="hero__data__day">
+                  <span> {{ formatDisplayDate(eventDoc.meta.startDate) }}</span>
+                  <span v-if="eventDoc.meta.startDate !== eventDoc.meta.endDate"
+                    >〜 {{ formatDisplayDate(eventDoc.meta.endDate) }}
+                  </span>
+                </p>
+                <p v-if="eventDoc.meta?.openingTime" class="hero__data__time">
+                  {{ eventDoc.meta.openingTime }}
+                </p>
+              </dd>
+            </div>
+
+            <div v-if="eventDoc.meta?.placeName" class="hero__data__item place">
+              <dt>📍場所</dt>
+              <dd>
+                <p class="preline">{{ eventDoc.meta?.placeName }}</p>
+              </dd>
+            </div>
+
+            <div v-if="eventDoc.meta?.fee" class="hero__data__item fee">
+              <dt>💰参加費</dt>
+              <dd>{{ eventDoc.meta?.fee }}</dd>
+            </div>
+
+            <div v-if="eventDoc.meta?.reservation" class="hero__data__item re">
+              <dt>📮予約</dt>
+              <dd>{{ eventDoc.meta?.reservation }}</dd>
+            </div>
+
+            <div v-if="eventDoc.meta?.note" class="hero__data__item re">
+              <dt>📝備考</dt>
+              <dd>{{ eventDoc.meta?.note }}</dd>
+            </div>
+
+            <div
+              v-if="eventDoc.meta?.officialUrl"
+              class="hero__data__item official-url"
+            >
+              <dt>💻公式サイト</dt>
+              <dd>
+                <a
+                  class="u-hv-underline word-break"
+                  :href="eventDoc.meta?.officialUrl"
+                  target="_blank"
+                  >{{ eventDoc.meta?.officialUrl }}</a
+                >
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </header>
+
+      <p v-if="eventDoc.meta?.summary" class="event-detail__summary preline">
+        {{ eventDoc.meta.summary }}
+      </p>
+
+      <section v-if="hasBody" class="event-detail__section">
+        <div class="inner">
+          <h2 class="event-detail__section__ttl">イベント詳細</h2>
+          <div class="event-detail__section__detail">
+            <ContentRenderer :value="eventDoc" />
+          </div>
+        </div>
+      </section>
+    </article>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -164,38 +246,66 @@ onMounted(() => {
 @use "@/assets/scss/component/utiltyPlaceholders";
 @use "sass:math";
 
-.event-detail {
-  margin-inline: auto;
-  @include pc {
-    width: rem($pcBaseW);
-  }
+.preline {
+  white-space: pre-line;
+}
+.word-break {
+  word-break: break-all;
+}
 
-  &__hero {
+.event-detail {
+  .hero {
+    @include pc {
+      width: rem($pcBaseW);
+      margin-inline: auto;
+    }
+    @include sp {
+      padding: 0 rem(20);
+    }
     &__image {
-      width: 100%;
-      margin-bottom: rem(4 * 10);
+      // width: 100%;
+      margin: 0 auto rem(4 * 10);
       position: relative;
       border: 1px solid #000;
-      border-radius: rem(25);
-      padding: rem(10);
+      @include pc {
+        width: max-content;
+        max-width: 100%;
+        border-radius: rem(25);
+        padding: rem(8);
+      }
+      @include tab {
+        max-width: 100%;
+        // width: 100%;
+        // min-width: max-content;
+      }
+      @include sp {
+        border-radius: rem(12);
+        padding: rem(3);
+      }
 
       .inner {
         position: relative;
-        border-radius: rem(15);
         overflow: hidden;
+        @include pc {
+          border-radius: rem(15);
+        }
+        @include sp {
+          border-radius: rem(10);
+        }
       }
       img {
         display: block;
-        width: max-content;
         // max-width: 100%;
         // min-width: 80%;
         margin-inline: auto;
-        border-radius: rem(20);
-        max-height: rem(500);
-
-        &.is-portrait {
-          // min-width: auto;
-          // max-height: rem(500);
+        // border-radius: rem(15);
+        @include pc {
+          width: max-content;
+          max-height: rem(500);
+        }
+        @include tab {
+          max-width: 100%;
+          max-height: initial;
         }
       }
 
@@ -222,25 +332,114 @@ onMounted(() => {
       }
     }
 
-    &__text {
+    &__tags {
+      display: flex;
+      gap: rem(8);
+      margin-bottom: rem(34);
+
+      li {
+        border: 1px solid #000;
+        width: fit-content;
+        border-radius: rem(5);
+        font-weight: 700;
+        @include pc {
+          padding: rem(6) rem(20);
+          font-size: rem(12);
+        }
+        @include sp {
+          padding: rem(5) rem(15);
+        }
+      }
+    }
+
+    // &__text {
+    //   @include sp {
+    //     // padding: 0 rem(20);
+    //   }
+    // }
+
+    &__title {
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: rem(34);
+      @include pc {
+        font-size: rem(30);
+      }
       @include sp {
-        padding: 0 rem(20);
+        font-size: rem(24);
+        line-height: 1.5;
+      }
+    }
+
+    &__data {
+      &__item {
+        display: grid;
+        grid-template-columns: rem(140) 1fr;
+        gap: rem(20);
+        font-weight: 700;
+        border-top: 1px solid var(--c-border);
+        padding: rem(24) 0;
+        @include pc {
+          grid-template-columns: rem(140) 1fr;
+        }
+        @include sp {
+          grid-template-columns: rem(100) 1fr;
+        }
+        &:last-child {
+          border-bottom: 1px solid var(--c-border);
+        }
+      }
+      dt {
+        border-right: 1px solid var(--c-border);
       }
     }
   }
 
-  &__title {
+  // &__subtitle {
+  //   font-weight: 700;
+  // }
+
+  // &__section {
+  //   margin-top: rem(100);
+  //   @include sp {
+  //     padding: 0 rem(20);
+  //   }
+  // }
+
+  &__summary {
     font-weight: 700;
-    font-size: rem(4 * 7);
-  }
-  &__subtitle {
-    font-weight: 700;
+    line-height: 1.8;
+    @include pc {
+      width: rem($pcBaseW);
+      margin-top: rem(80);
+      margin-inline: auto;
+      font-size: rem(18);
+    }
+    @include sp {
+      margin-top: rem(40);
+      padding: 0 rem(20);
+    }
   }
 
   &__section {
-    margin-top: rem(100);
+    // background-color: #f7ffc2;
+    @include pc {
+      padding-block: rem(80);
+      margin-top: rem(80);
+    }
     @include sp {
-      padding: 0 rem(20);
+      padding-block: rem(40);
+      margin-top: rem(40);
+    }
+
+    .inner {
+      @include pc {
+        width: rem($pcBaseW);
+        margin-inline: auto;
+      }
+      @include sp {
+        padding: 0 rem(20);
+      }
     }
   }
 }

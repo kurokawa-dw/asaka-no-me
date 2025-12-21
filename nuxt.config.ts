@@ -11,8 +11,13 @@ export default defineNuxtConfig({
     port: 3000,
     // https: { key: 'path/to/key.pem', cert: 'path/to/cert.pem' } // HTTPSにしたい場合
   },
-  modules: [// "@nuxtjs/google-fonts",
-  "@nuxt/content", "@nuxtjs/tailwindcss", "@pinia/nuxt", "nuxt-svgo"],
+  modules: [
+    // "@nuxtjs/google-fonts",
+    "@nuxt/content",
+    "@nuxtjs/tailwindcss",
+    "@pinia/nuxt",
+    "nuxt-svgo",
+  ],
 
   nitro: {
     prerender: {
@@ -22,7 +27,7 @@ export default defineNuxtConfig({
   },
 
   app: {
-    baseURL: "/",
+    // baseURL: "/",
     head: {
       title: "朝霞の目",
       link: [
@@ -55,6 +60,12 @@ export default defineNuxtConfig({
 
   tailwindcss: {
     cssPath: "@/assets/css/tailwind.css",
+  },
+
+  content: {
+    renderer: {
+      anchorLinks: false,
+    },
   },
 
   hooks: {

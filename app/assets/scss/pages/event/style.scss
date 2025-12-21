@@ -1,0 +1,49 @@
+@use "@/assets/scss/variable" as *;
+@use "@/assets/scss/mixin/" as *;
+@use "@/assets/scss/component/utiltyPlaceholders";
+@use "sass:math";
+
+.event-detail__section {
+  background-color: #FFFDCF;
+  &__ttl {
+    font-weight: 700;
+    margin-bottom: rem(24);
+  }
+  &__detail {
+    > div > * + * {
+      margin-top: rem(40);
+    }
+
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      width: max-content;
+      padding: rem(2) 1em;
+      font-weight: 700;
+      background-color: #ffd754;
+      border-radius: rem(5);
+      + * {
+        margin-top: rem(16);
+      }
+    }
+
+    dl {
+      display: grid;
+      gap: 1em 2em;
+      grid-template-columns: auto 1fr;
+      dt {
+        font-weight: 700;
+        span {
+          width: 100%;
+          padding: rem(2) 1em;
+          display: block;
+          background-color: #ff8f8f;
+          text-align: center;
+          border-radius: rem(5);
+        }
+      }
+    }
+  }
+}

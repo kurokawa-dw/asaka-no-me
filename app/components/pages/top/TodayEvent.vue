@@ -21,17 +21,29 @@ onBeforeUnmount(() => mount.setMounted("todayEvent", false));
     </p>
 
     <div class="event-contents">
-      <div v-if="todayEvents.length">
-        <ul class="event-list">
-          <li v-for="event in todayEvents" :key="event.slug">
-            <NuxtLink :to="`/event/${event.slug}`">
-              {{ event.title }}
-            </NuxtLink>
-          </li>
-        </ul>
-      </div>
-
+      <ul v-if="todayEvents.length" class="event-list">
+        <li v-for="event in todayEvents" :key="event.slug">
+          <NuxtLink :to="`/event/${event.slug}`">
+            {{ event.title }}
+          </NuxtLink>
+        </li>
+      </ul>
       <p v-else class="no-event-text">本日開催のイベントはありません。</p>
+
+      <!-- <ul v-if="todayEvents.length" class="event-list">
+        <li>
+          <a href="ddd">あさか 冬のあかりテラス2025</a>
+        </li>
+        <li>
+          <a href="ddd">スタンプラリー</a>
+        </li>
+        <li>
+          <a href="ddd">あさか 冬のあかりテラス2025</a>
+        </li>
+        <li>
+          <a href="ddd">あさか 冬のあかりテラス2025</a>
+        </li>
+      </ul> -->
     </div>
   </section>
 </template>
@@ -57,7 +69,7 @@ onBeforeUnmount(() => mount.setMounted("todayEvent", false));
 
   @include sp {
     width: rem($spBaseW);
-    padding: rem(40) rem(30) rem(40);
+    padding: rem(40) rem(20) rem(40) rem(10);
     border-radius: rem(20);
   }
 }
@@ -101,6 +113,20 @@ onBeforeUnmount(() => mount.setMounted("todayEvent", false));
     }
     @include sp {
       font-size: rem(16);
+    }
+  }
+
+  .event-list {
+    display: flex;
+    justify-content: center;
+    gap: 1em 2em;
+    font-size: rem(20);
+    flex-wrap: wrap;
+    li {
+      &::before {
+        content: "・";
+        color: var(--c-red);
+      }
     }
   }
 }
