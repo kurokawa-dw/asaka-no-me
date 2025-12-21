@@ -3,6 +3,7 @@ slug:
 title: 商店街スタンプラリー
 subtitle: はじめての人も常連さんも楽しめる！
 
+# 必ず yyyy-mm-dd start endともに入れること
 startDate: 2025-12-20
 endDate: 2025-12-31
 openingTime: 各店舗の営業時間内

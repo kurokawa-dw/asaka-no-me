@@ -347,7 +347,8 @@ onMounted(() => {
           font-size: rem(12);
         }
         @include sp {
-          padding: rem(5) rem(15);
+          padding: rem(3) rem(10);
+          font-size: rem(10);
         }
       }
     }

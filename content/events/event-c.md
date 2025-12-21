@@ -3,8 +3,9 @@ slug: event-c
 title: 餅つき大会
 subtitle: はじめての人も常連さんも楽しめる！
 
-startDate: 2026-1-03
-endDate: 2026-1-03
+# 必ず yyyy-mm-dd start endともに入れること
+startDate: 2026-01-03
+endDate: 2026-01-03
 openingTime: 各店舗の営業時間内
 
 tags:

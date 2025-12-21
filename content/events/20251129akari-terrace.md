@@ -3,6 +3,7 @@ slug:
 title: あさか 冬のあかりテラス2025
 subtitle: 夢の世界へ
 
+# 必ず yyyy-mm-dd start endともに入れること
 startDate: 2025-11-29
 endDate: 2026-01-25
 openingTime: 16:30〜21:00

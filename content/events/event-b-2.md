@@ -3,6 +3,7 @@ slug:
 title: お風呂掃除大苦戦
 subtitle: はじめての人も常連さんも楽しめる！
 
+# 必ず yyyy-mm-dd start endともに入れること
 startDate: 2025-12-12
 endDate: 2025-12-12
 openingTime: 各店舗の営業時間内
