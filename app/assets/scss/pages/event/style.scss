@@ -4,7 +4,7 @@
 @use "sass:math";
 
 .event-detail__section {
-  background-color: #FFFDCF;
+  background-color: var(--c-popotan);
   &__ttl {
     font-weight: 700;
     margin-bottom: rem(24);

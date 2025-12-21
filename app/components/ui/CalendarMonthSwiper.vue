@@ -381,7 +381,7 @@ const onClientMounted = async () => {
         background-color: transparent;
       }
       &--has-event {
-        background-color: var(--c-green);
+        background-color: var(--c-popotan);
         font-weight: 600;
       }
       &--clickable {
