@@ -51,22 +51,6 @@ export const useSeoHead = (input: UseSeoHeadInput) => {
       { name: "twitter:card", content: "summary_large_image" },
     ] as Array<Record<string, string>>;
 
-    // if (input.description) {
-    //   meta.push(
-    //     { name: "description", content: input.description },
-    //     { property: "og:description", content: input.description }
-    //   );
-    // }
-
-    // if (ogImage.value) {
-    //   meta.push(
-    //     { property: "og:image", content: ogImage.value },
-    //     { name: "twitter:card", content: "summary_large_image" }
-    //   );
-    // } else {
-    //   meta.push({ name: "twitter:card", content: "summary" });
-    // }
-
     if (input.noindex) {
       meta.push({ name: "robots", content: "noindex,nofollow" });
     }
