@@ -348,7 +348,7 @@ const onClientMounted = async () => {
     position: relative;
     @include pc {
       padding-block: rem(10);
-      font-size: rem(18);
+      font-size: rem(20);
     }
     @include sp {
       font-size: rem(16);
@@ -370,19 +370,32 @@ const onClientMounted = async () => {
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      position: relative;
       @include pc {
         width: 40%;
       }
       @include sp {
         width: 70%;
       }
+
+      &::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: rem(8);
+        position: absolute;
+        bottom: rem(6);
+        border-radius: rem(8);
+        left: 0;
+        transition: background 0.2s;
+      }
       &--empty {
-        background-color: transparent;
       }
       &--has-event {
-        background-color: var(--c-popotan);
         font-weight: 600;
+        &::before {
+          background-color: var(--c-green);
+        }
       }
       &--clickable {
         cursor: pointer;

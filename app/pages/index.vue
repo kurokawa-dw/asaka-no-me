@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { SITE_INFO } from "~/constants/siteInfo";
 import type { DayWithEvents } from "~/composables/useEventCalendar";
 
 const route = useRoute();
@@ -153,6 +154,10 @@ watch(
 //     console.log("[index] filteredListByDate", filteredListByDate.value);
 //   });
 // }
+
+////////////////////////////////////////////////////////////
+useSeoHead({});
+////////////////////////////////////////////////////////////
 </script>
 
 <template>

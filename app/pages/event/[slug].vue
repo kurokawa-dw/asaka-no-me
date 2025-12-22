@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import "~/assets/scss/pages/event/style.scss";
+import { SITE_INFO } from "~/constants/siteInfo";
 
 const route = useRoute();
 
@@ -132,6 +133,11 @@ onMounted(() => {
 // } else {
 //   console.log("違う");
 // }
+
+useSeoHead({
+  title: eventDoc.value.title,
+  type: "article",
+});
 </script>
 
 <template>

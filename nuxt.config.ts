@@ -1,6 +1,7 @@
 import fg from "fast-glob";
 import { readFile } from "node:fs/promises";
 import matter from "gray-matter";
+import { SITE_INFO } from "./app/constants/siteInfo";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -27,9 +28,13 @@ export default defineNuxtConfig({
   },
 
   app: {
-    // baseURL: "/",
     head: {
-      title: "朝霞の目",
+      htmlAttrs: {
+        lang: "ja",
+        prefix: "og: https://ogp.me/ns#",
+      },
+      charset: "utf-8",
+      viewport: "width=device-width",
       link: [
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         {
@@ -65,6 +70,12 @@ export default defineNuxtConfig({
   content: {
     renderer: {
       anchorLinks: false,
+    },
+  },
+
+  runtimeConfig: {
+    public: {
+      siteUrl: SITE_INFO.url,
     },
   },
 

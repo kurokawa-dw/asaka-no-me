@@ -36,13 +36,18 @@
       dt {
         font-weight: 700;
         span {
-          width: 100%;
-          padding: rem(2) 1em;
-          display: block;
-          background-color: #ff8f8f;
-          text-align: center;
-          border-radius: rem(5);
+          &::before {
+            content: "ー";
+          }
         }
+        // span {
+        //   width: 100%;
+        //   padding: rem(2) 1em;
+        //   display: block;
+        //   background-color: #ff8f8f;
+        //   text-align: center;
+        //   border-radius: rem(5);
+        // }
       }
     }
   }
