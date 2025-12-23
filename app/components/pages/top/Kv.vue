@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { $gsap } = useNuxtApp();
 
-const tpRef = ref<HTMLDivElement | null>(null);
+const tpRef = ref<SVGTextPathElement | null>(null);
 onMounted(() => {
   // const tp = document.querySelector("#tp");
 
@@ -9,7 +9,7 @@ onMounted(() => {
 
   // 1) 表示したい文字列（ここを書き換え）
   const base =
-    "目黒川じゃなくて黒目川だよ | あサカの目  |  イベントカレンダー | 目黒川じゃなくて黒目川だよ | 朝霞の目 |  Asaka-no-me  |  ";
+    "目黒川じゃなくて黒目川だよ | あサカの目 | イベントカレンダー | 目黒川じゃなくて黒目川だよ | 朝霞の目 | Asaka-no-me | ";
 
   // 2) 2回連結（これで「最後の後ろに最初がいる」状態を作る）
   tpRef.value!.textContent = base + base + base + base;

@@ -14,6 +14,15 @@
       margin-top: rem(40);
     }
 
+    a {
+      text-decoration: underline;
+      @media (hover: hover) {
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+
     h2,
     h3,
     h4,
@@ -37,7 +46,7 @@
         font-weight: 700;
         span {
           &::before {
-            content: "ー";
+            content: "ー ";
           }
         }
         // span {

@@ -7,6 +7,7 @@
       <slot />
     </main>
     <footer class="l-footer">
+      <LayoutsOfficialLink />
       <LayoutsFooter />
     </footer>
   </div>

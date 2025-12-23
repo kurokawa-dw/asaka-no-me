@@ -44,6 +44,13 @@ tags:
 
 朝霞市の新たな冬の風物詩となった「あさか冬のあかりテラス2025」を実施することにより、まちの魅力の向上や賑わいの創出及び官民連携のまちづくりのさらなる推進を図ることを目的に実施します。
 
+[外部リンク](https://www.city.asaka.lg.jp "朝霞市公式ページ")<br>
+[外部リンク](https://www.city.asaka.lg.jp "朝霞市公式ページ")
+
+**[外部リンク](https://www.city.asaka.lg.jp "朝霞市公式ページ")**
+
+<a href="https://www.city.asaka.lg.jp" target="_blank">外部リンク</a>
+
 <dl>
   <dt><span>主催</span></dt>
   <dd>朝霞市</dd>

@@ -382,12 +382,19 @@ const onClientMounted = async () => {
         content: "";
         display: block;
         width: 100%;
-        height: rem(8);
         position: absolute;
-        bottom: rem(6);
-        border-radius: rem(8);
         left: 0;
         transition: background 0.2s;
+        @include pc {
+          height: rem(8);
+          border-radius: rem(8);
+          bottom: rem(6);
+        }
+        @include sp {
+          height: rem(4);
+          border-radius: rem(4);
+          bottom: rem(0);
+        }
       }
       &--empty {
       }
@@ -404,6 +411,7 @@ const onClientMounted = async () => {
       span {
         display: block;
         aspect-ratio: 1 /1;
+        position: relative;
       }
     }
   }

@@ -202,12 +202,15 @@ useSeoHead({
               <dd>{{ eventDoc.meta?.fee }}</dd>
             </div>
 
-            <div v-if="eventDoc.meta?.reservation" class="hero__data__item re">
+            <div
+              v-if="eventDoc.meta?.reservation"
+              class="hero__data__item reserve"
+            >
               <dt>📮予約</dt>
               <dd>{{ eventDoc.meta?.reservation }}</dd>
             </div>
 
-            <div v-if="eventDoc.meta?.note" class="hero__data__item re">
+            <div v-if="eventDoc.meta?.note" class="hero__data__item note">
               <dt>📝備考</dt>
               <dd>{{ eventDoc.meta?.note }}</dd>
             </div>
@@ -219,7 +222,7 @@ useSeoHead({
               <dt>💻公式サイト</dt>
               <dd>
                 <a
-                  class="u-hv-underline word-break"
+                  class="u-link-underline word-break"
                   :href="eventDoc.meta?.officialUrl"
                   target="_blank"
                   >{{ eventDoc.meta?.officialUrlLabel }}</a
