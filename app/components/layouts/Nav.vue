@@ -23,7 +23,7 @@ const navData = [
   <div class="nav">
     <ul class="nav__list">
       <li v-for="data in navData" :key="data.path">
-        <NuxtLink :to="data.path" @click="emit('close')">{{
+        <NuxtLink :to="data.path" class="u-ff-maru" @click="emit('close')">{{
           data.label
         }}</NuxtLink>
       </li>
@@ -52,23 +52,31 @@ const navData = [
   &__list {
     display: flex;
     flex-direction: column;
-    // gap: 1em;
+    gap: 2em;
     li {
-      border-top: 1px solid #aaa;
+      // border-top: 1px solid #aaa;
       &:last-child {
-        border-bottom: 1px solid #aaa;
+        // border-bottom: 1px solid #aaa;
       }
     }
     a {
-      display: block;
+      display: flex;
+      align-items: center;
       font-weight: 700;
+      gap: 0.5em;
       @include pc {
-        padding: rem(20) rem(50);
+        // padding: rem(20) rem(50);
         font-size: rem(18);
       }
       @include sp {
         padding: rem(15) rem(10);
         font-size: rem(16);
+      }
+
+      &::before {
+        content: "→";
+        font-size: 80%;
+        display: block;
       }
     }
   }
