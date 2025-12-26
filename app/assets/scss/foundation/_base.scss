@@ -3,11 +3,10 @@
 @use "../component/utiltyPlaceholders" as *;
 @use "sass:math";
 
-html {
-  scroll-padding-top: 50px;
-
+:root {
   @include pc {
     font-size: 62.5%;
+    scroll-padding-top: rem(80);
   }
 
   @include tab {
@@ -16,8 +15,10 @@ html {
 
   @include sp {
     font-size: calc(1vw * 1000 / $vwViewPort);
+    scroll-padding-top: rem(50);
   }
 }
+
 
 body {
   width: 100%;
