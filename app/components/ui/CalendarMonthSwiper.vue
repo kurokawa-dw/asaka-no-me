@@ -54,6 +54,14 @@ const fmtYmd = (d: Date): string => {
 const fmtYearMonth = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
 
+const isSameYMD = (a: Date, b: Date) => {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+};
+
 // ===== 1年分の「月スライド」配列を作る =====
 // 例：今が 2025/12 の場合 → 2025/07〜2026/06 の12ヶ月
 const today = new Date();
@@ -107,6 +115,7 @@ type CalendarCell = {
   dateStr: string | null;
   dayNumber: number | null;
   hasEvents: boolean;
+  today: boolean;
 };
 
 const buildCalendarCells = (year: number, month: number): CalendarCell[] => {
@@ -114,6 +123,7 @@ const buildCalendarCells = (year: number, month: number): CalendarCell[] => {
   const firstWeekday = firstDay.getDay(); // 0:日〜6:土
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+  const today = new Date();
   const cells: CalendarCell[] = [];
 
   // 前の空白
@@ -122,6 +132,7 @@ const buildCalendarCells = (year: number, month: number): CalendarCell[] => {
       dateStr: null,
       dayNumber: null,
       hasEvents: false,
+      today: false,
     });
   }
 
@@ -133,6 +144,7 @@ const buildCalendarCells = (year: number, month: number): CalendarCell[] => {
       dateStr,
       dayNumber: day,
       hasEvents: eventDateSet.value.has(dateStr),
+      today: isSameYMD(today, d),
     });
   }
 
@@ -144,6 +156,7 @@ const buildCalendarCells = (year: number, month: number): CalendarCell[] => {
       dateStr: null,
       dayNumber: null,
       hasEvents: false,
+      today: false,
     });
   }
 
@@ -219,6 +232,7 @@ const onClientMounted = async () => {
                         cell.dayNumber === null,
                       'calendar-swiper__cell__inner--has-event': cell.hasEvents,
                       'calendar-swiper__cell__inner--clickable': cell.hasEvents,
+                      'calendar-swiper__cell__inner--today': cell.today,
                     }"
                     @click="onDateClick(cell)"
                   >
@@ -376,6 +390,7 @@ const onClientMounted = async () => {
       }
       @include sp {
         width: 70%;
+        padding-bottom: rem(2);
       }
 
       &::before {
@@ -393,7 +408,7 @@ const onClientMounted = async () => {
         @include sp {
           height: rem(4);
           border-radius: rem(4);
-          bottom: rem(0);
+          bottom: rem(4);
         }
       }
       &--empty {
@@ -402,16 +417,37 @@ const onClientMounted = async () => {
         font-weight: 600;
         &::before {
           background-color: var(--c-green);
+          z-index: 1;
         }
       }
       &--clickable {
         cursor: pointer;
+      }
+      &--today {
+        // color: #fff;
+        &::after {
+          content: "";
+          display: block;
+          width: rem(5);
+          height: rem(5);
+          border-radius: 100%;
+          border: 1px solid var(--c-border);
+          background-color: #000;
+          position: absolute;
+          @include pc {
+            top: rem(2);
+          }
+          @include sp {
+            top: rem(-2);
+          }
+        }
       }
 
       span {
         display: block;
         aspect-ratio: 1 /1;
         position: relative;
+        z-index: 3;
       }
     }
   }
