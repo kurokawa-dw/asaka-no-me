@@ -73,6 +73,12 @@ export default defineNuxtConfig({
     },
   },
 
+  typescript: {
+    tsConfig: {
+      include: ["types/**/*.d.ts"],
+    },
+  },
+
   runtimeConfig: {
     public: {
       siteUrl: SITE_INFO.url,
