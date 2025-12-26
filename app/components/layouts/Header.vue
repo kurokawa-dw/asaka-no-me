@@ -150,17 +150,23 @@ const closeNav = () => {
     }
     @include sp {
       width: rem(25);
-      height: rem(20);
+      height: rem(17);
     }
 
     span {
       display: block;
       width: 100%;
-      height: rem(1);
       background-color: #000;
       position: absolute;
       margin: auto;
       transition: transform 0.5s;
+      border-radius: rem(2);
+      @include pc {
+        height: rem(2);
+      }
+      @include sp {
+        height: 1px;
+      }
       &:nth-child(1) {
         top: 0;
       }

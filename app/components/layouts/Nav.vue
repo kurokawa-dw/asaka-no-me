@@ -37,6 +37,17 @@ const navData = [
 @use "@/assets/scss/component/utiltyPlaceholders";
 @use "sass:math";
 
+@keyframes navArrowAnime {
+  0% {
+    transform: translateX(rem(-10));
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(rem(0));
+    opacity: 1;
+  }
+}
+
 .nav {
   width: 100%;
   height: 100vh;
@@ -63,12 +74,12 @@ const navData = [
         content: "→";
         font-size: 90%;
         display: block;
-        transition: transform 0.3s;
+        margin-top: rem(3);
       }
 
       &:has(a:hover) {
         &::before {
-          transform: scale(1.3);
+          animation: navArrowAnime 0.8s $easeOutQuart infinite;
         }
       }
     }
