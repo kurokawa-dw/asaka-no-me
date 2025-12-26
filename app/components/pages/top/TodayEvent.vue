@@ -29,21 +29,6 @@ onBeforeUnmount(() => mount.setMounted("todayEvent", false));
         </li>
       </ul>
       <p v-else class="no-event-text">本日開催のイベントはありません。</p>
-
-      <!-- <ul v-if="todayEvents.length" class="event-list">
-        <li>
-          <a href="ddd">あさか 冬のあかりテラス2025</a>
-        </li>
-        <li>
-          <a href="ddd">スタンプラリー</a>
-        </li>
-        <li>
-          <a href="ddd">あさか 冬のあかりテラス2025</a>
-        </li>
-        <li>
-          <a href="ddd">あさか 冬のあかりテラス2025</a>
-        </li>
-      </ul> -->
     </div>
   </section>
 </template>
@@ -69,7 +54,7 @@ onBeforeUnmount(() => mount.setMounted("todayEvent", false));
 
   @include sp {
     width: rem($spBaseW);
-    padding: rem(40) rem(20) rem(40) rem(10);
+    padding: rem(40) rem(20) rem(40) rem(30);
     border-radius: rem(20);
   }
 }
@@ -119,13 +104,40 @@ onBeforeUnmount(() => mount.setMounted("todayEvent", false));
   .event-list {
     display: flex;
     justify-content: center;
-    gap: 1em 2em;
-    font-size: rem(20);
     flex-wrap: wrap;
+    @include pc {
+      gap: 1em 2em;
+    }
+    @include sp {
+      gap: 0.5em 2em;
+      justify-content: flex-start;
+    }
+
     li {
+      position: relative;
+      @include pc {
+        font-size: rem(20);
+        padding-left: 1em;
+      }
+      @include sp {
+        font-size: rem(16);
+        padding-left: 0.8em;
+      }
       &::before {
-        content: "・";
-        color: var(--c-red);
+        content: "";
+        display: block;
+        background-color: var(--c-red);
+        width: 0.5em;
+        height: 0.5em;
+        border-radius: 100%;
+        position: absolute;
+        left: 0;
+        @include pc {
+          top: rem(10);
+        }
+        @include sp {
+          top: rem(10);
+        }
       }
     }
   }
