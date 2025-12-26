@@ -262,6 +262,15 @@ useSeoHead({
   word-break: break-all;
 }
 
+.event-page {
+  @include pc {
+    padding-top: rem(50);
+  }
+  @include sp {
+    padding-top: rem(20);
+  }
+}
+
 .event-detail {
   .hero {
     @include pc {

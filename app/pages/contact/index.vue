@@ -7,7 +7,12 @@ useSeoHead({
 </script>
 
 <template>
-  <div>問い合わせページ</div>
+  <div class="about-page">
+    <UiLowerPageTitle>お問い合わせ</UiLowerPageTitle>
+    <UiLowerPageContents class="about-page__contents">
+      コンテンツ
+    </UiLowerPageContents>
+  </div>
 </template>
 
 <style scoped lang="scss">

@@ -17,6 +17,12 @@ const linkData = [
     cat: "web",
   },
   {
+    label: "朝霞市市長公室シティ・プロモーション課広報係",
+    url: "https://x.com/asaka_city",
+    cat: "x",
+  },
+
+  {
     label: "朝霞市 都市建設部【公式】",
     url: "https://www.instagram.com/toshikensetsu_asaka/",
     cat: "instagram",

@@ -53,30 +53,55 @@ const navData = [
     display: flex;
     flex-direction: column;
     gap: 2em;
+
     li {
-      // border-top: 1px solid #aaa;
-      &:last-child {
-        // border-bottom: 1px solid #aaa;
-      }
-    }
-    a {
       display: flex;
       align-items: center;
       font-weight: 700;
       gap: 0.5em;
+      &::before {
+        content: "→";
+        font-size: 90%;
+        display: block;
+        transition: transform 0.3s;
+      }
+
+      &:has(a:hover) {
+        &::before {
+          transform: scale(1.3);
+        }
+      }
+    }
+
+    a {
+      position: relative;
       @include pc {
-        // padding: rem(20) rem(50);
         font-size: rem(18);
       }
       @include sp {
-        padding: rem(15) rem(10);
         font-size: rem(16);
       }
 
-      &::before {
-        content: "→";
-        font-size: 80%;
+      &::after {
+        content: "";
         display: block;
+        width: 100%;
+        height: 1px;
+        background-color: var(--base-fc);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform-origin: left center;
+        transform: scaleX(0);
+        transition: 0.3s;
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          &::after {
+            transform: scaleX(1);
+          }
+        }
       }
     }
   }

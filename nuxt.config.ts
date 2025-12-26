@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@pinia/nuxt",
     "nuxt-svgo",
+    "@nuxt/image",
   ],
 
   nitro: {

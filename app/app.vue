@@ -20,13 +20,13 @@ const isTopPage = computed(() => {
 @use "sass:math";
 .page-contents {
   @include pc {
-    padding-top: rem(120);
-    padding-bottom: rem(100);
+    padding-top: rem(80);
+    padding-bottom: rem(120);
     min-height: calc(100vh - rem(280));
   }
 
   @include sp {
-    padding-top: rem(75);
+    padding-top: rem(50);
     padding-bottom: rem(100);
     min-height: calc(100vh - rem(300));
   }
