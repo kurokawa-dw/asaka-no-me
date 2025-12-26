@@ -18,14 +18,21 @@ const props = defineProps<{
 @use "@/assets/scss/component/utiltyPlaceholders";
 @use "sass:math";
 .note-list {
+  display: flex;
+  flex-direction: column;
+  @include sp {
+    gap: 0.3em;
+  }
   li {
     padding-left: 1em;
-    font-size: rem(12);
     position: relative;
     @include pc {
+      font-size: rem(12);
     }
     @include sp {
-      line-height: 1.8;
+      // font-size: rem(12);
+      font-size: 12px;
+      line-height: 1.5;
     }
     &::before {
       content: "※";

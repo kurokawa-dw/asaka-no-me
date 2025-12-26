@@ -92,22 +92,24 @@ useSeoHead({
   }
   &__admin {
     position: relative;
+    // border-left: 1px solid var(--c-border);
     @include pc {
       margin: rem(150) auto 0;
       display: grid;
-      grid-template-columns: rem(430) 1fr;
+      grid-template-columns: rem(410) 1fr;
       grid-template-rows: auto auto;
-      gap: rem(30) rem(30);
+      gap: rem(40) rem(30);
       align-items: center;
       width: rem(600);
+      padding-left: rem(35);
     }
 
     @include sp {
       margin: rem(100) auto 0;
-      width: rem(280);
+      width: rem(300);
+      padding-left: rem(20);
     }
 
-    &::before,
     &::after {
       content: "";
       display: block;
@@ -115,27 +117,13 @@ useSeoHead({
       position: absolute;
       width: 1px;
       height: 1px;
-    }
-    &::before {
-      width: 100%;
-      @include pc {
-        top: rem(45);
-        transform: scaleX(1.3);
-      }
-      @include sp {
-        top: rem(35);
-        transform: scaleX(1.3);
-      }
-    }
-    &::after {
+      left: 0;
       @include pc {
         top: rem(-10);
-        left: rem(-30);
         height: calc(100% + rem(20));
       }
       @include sp {
         top: rem(-7);
-        left: rem(-18);
         height: calc(100% + rem(14));
       }
     }
@@ -143,12 +131,30 @@ useSeoHead({
     .title {
       font-weight: 700;
       grid-column: span 2;
+      position: relative;
       @include pc {
         font-size: rem(16);
       }
       @include sp {
         font-size: rem(14);
-        margin-bottom: rem(20);
+        margin-bottom: rem(30);
+      }
+      &::before {
+        content: "";
+        display: block;
+        height: 1px;
+        background-color: var(--c-border);
+        position: absolute;
+        @include pc {
+          width: rem(650);
+          bottom: rem(-15);
+          left: rem(-80);
+        }
+        @include sp {
+          width: rem(320);
+          bottom: rem(-12);
+          right: 0;
+        }
       }
     }
     .text {
