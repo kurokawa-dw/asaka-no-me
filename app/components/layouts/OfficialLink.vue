@@ -12,6 +12,11 @@ const linkData = [
     cat: "web",
   },
   {
+    label: "益財団法人 朝霞市文化・スポーツ振興公社",
+    url: "https://absk.or.jp/",
+    cat: "web",
+  },
+  {
     label: "朝霞市 都市建設部【公式】",
     url: "https://www.instagram.com/toshikensetsu_asaka/",
     cat: "instagram",
@@ -135,7 +140,7 @@ const linkData = [
   a {
     font-weight: 700;
     display: grid;
-    align-items: center;
+    align-items: flex-start;
     @include pc {
       grid-template-columns: rem(20) 1fr;
       gap: rem(5);
@@ -149,10 +154,12 @@ const linkData = [
     .icon {
       display: flex;
       align-items: center;
+      margin-top: rem(1);
       svg,
       img {
         display: block;
         width: 100%;
+        height: auto;
       }
     }
   }
