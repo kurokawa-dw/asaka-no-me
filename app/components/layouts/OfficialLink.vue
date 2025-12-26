@@ -22,7 +22,7 @@ const linkData = [
     cat: "instagram",
   },
   {
-    label: "アサカストリートテラス(あさかエリアデザイン会議)",
+    label: "アサカストリートテラス\n(あさかエリアデザイン会議)",
     url: "https://www.instagram.com/asaka_street_terrace/",
     cat: "instagram",
   },
@@ -59,8 +59,8 @@ const linkData = [
     <p class="ttl-label u-ff-maru">公式リンク</p>
 
     <ul class="list">
-      <li v-for="item in linkData" :key="item.url">
-        <a :href="item.url" class="u-hv-underline" target="_blank">
+      <li v-for="item in linkData" :key="item.url" class="list__item">
+        <div class="list__item__inner">
           <i
             class="icon"
             :class="{
@@ -83,8 +83,13 @@ const linkData = [
             /></template>
             <template v-else="item.cat === 'web'"><IconWeb /></template>
           </i>
-          {{ item.label }}
-        </a>
+
+          <div>
+            <a :href="item.url" class="u-hv-underline" target="_blank">
+              {{ item.label }}
+            </a>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
@@ -129,7 +134,7 @@ const linkData = [
 .list {
   @include pc {
     display: grid;
-    gap: rem(20) rem(30);
+    gap: rem(20) rem(10);
     grid-template-columns: auto auto auto;
   }
   @include sp {
@@ -137,29 +142,44 @@ const linkData = [
     flex-direction: column;
     gap: rem(10);
   }
-  a {
-    font-weight: 700;
-    display: grid;
-    align-items: flex-start;
-    @include pc {
-      grid-template-columns: rem(20) 1fr;
-      gap: rem(5);
-      font-size: rem(14);
-    }
-    @include sp {
-      grid-template-columns: rem(16) 1fr;
-      gap: rem(5);
-      font-size: rem(12);
-    }
-    .icon {
-      display: flex;
-      align-items: center;
-      margin-top: rem(1);
-      svg,
-      img {
-        display: block;
-        width: 100%;
-        height: auto;
+
+  &__item {
+    &__inner {
+      display: grid;
+      align-items: flex-start;
+      font-feature-settings: "palt";
+      @include pc {
+        grid-template-columns: rem(18) auto;
+        gap: rem(5);
+        font-size: rem(14);
+      }
+      @include sp {
+        grid-template-columns: rem(14) auto;
+        gap: rem(5);
+        font-size: rem(12);
+        letter-spacing: 0.05em;
+        white-space: pre-line;
+      }
+
+      .icon {
+        display: flex;
+        align-items: center;
+        @include pc {
+          margin-top: rem(1.5);
+        }
+        @include sp {
+          margin-top: rem(3);
+        }
+        svg,
+        img {
+          display: block;
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      a {
+        font-weight: 700;
       }
     }
   }

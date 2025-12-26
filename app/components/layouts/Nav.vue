@@ -9,7 +9,7 @@ const navData = [
     path: "/",
   },
   {
-    label: "朝霞の目について",
+    label: "あサカの目について",
     path: "/about",
   },
   {

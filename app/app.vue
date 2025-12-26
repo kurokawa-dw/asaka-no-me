@@ -22,13 +22,13 @@ const isTopPage = computed(() => {
   @include pc {
     padding-top: rem(120);
     padding-bottom: rem(100);
-    min-height: calc(100vh - rem(80));
+    min-height: calc(100vh - rem(280));
   }
 
   @include sp {
     padding-top: rem(75);
     padding-bottom: rem(100);
-    min-height: calc(100vh - rem(50));
+    min-height: calc(100vh - rem(300));
   }
 
   &.is-top-page {
